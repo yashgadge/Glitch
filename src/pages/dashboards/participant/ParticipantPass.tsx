@@ -1,0 +1,129 @@
+import React, { useState, useEffect } from 'react';
+import { useAuth } from '../../../contexts/AuthContext';
+import { DigitalPassService } from '../../../services/DigitalPassService';
+import { ParticipantService } from '../../../services/ParticipantService';
+import { TeamService } from '../../../services/TeamService';
+import type { DigitalPass as DigitalPassModel, Participant, Team } from '../../../types/models';
+import DigitalPass from '../../../components/pass/DigitalPass';
+import { Card, CardContent } from '../../../components/ui/Card';
+import { QrCode, AlertTriangle } from 'lucide-react';
+import { Button } from '../../../components/ui/Button';
+import { useToast } from '../../../components/ui/ToastContext';
+import { motion } from 'framer-motion';
+
+export default function ParticipantPass() {
+  const { user } = useAuth();
+  const { success, error } = useToast();
+  const [pass, setPass] = useState<DigitalPassModel | null>(null);
+  const [profile, setProfile] = useState<Participant | null>(null);
+  const [team, setTeam] = useState<Team | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    if (!user) return;
+
+    const unsubProfile = ParticipantService.subscribeToParticipant(user.uid, (data) => {
+      setProfile(data);
+    });
+    
+    const unsubPass = DigitalPassService.subscribeToPass(user.uid, (data) => {
+      setPass(data);
+      setLoading(false);
+    });
+
+    return () => {
+      unsubProfile();
+      unsubPass();
+    };
+  }, [user]);
+
+  useEffect(() => {
+    if (profile?.teamId) {
+      const unsubTeam = TeamService.subscribeToTeam(profile.teamId, (data) => {
+        setTeam(data);
+      });
+      return () => unsubTeam();
+    }
+  }, [profile?.teamId]);
+
+  if (loading) {
+    return (
+      <div className="flex items-center justify-center h-64">
+        <div className="w-8 h-8 border-2 border-primary border-t-transparent rounded-full animate-spin"></div>
+      </div>
+    );
+  }
+
+  const handleDownloadPass = async () => {
+    const element = document.getElementById('digital-pass-container');
+    if (!element) return;
+    
+    // We import it dynamically to avoid SSR issues if this was SSR, but also it's just cleaner for large libs
+    try {
+      const html2pdf = (await import('html2pdf.js')).default;
+      const opt = {
+        margin:       0,
+        filename:     `GLITCH36_Pass_${profile?.name || 'Participant'}.pdf`,
+        image:        { type: 'jpeg', quality: 0.98 },
+        html2canvas:  { scale: 2, useCORS: true, backgroundColor: '#000000' },
+        jsPDF:        { unit: 'in', format: 'letter', orientation: 'portrait' }
+      };
+      
+      html2pdf().set(opt).from(element).save();
+      success('Pass downloaded successfully!');
+    } catch (err) {
+      console.error(err);
+      error('Failed to download pass. Please try again.');
+    }
+  };
+
+  return (
+    <div className="space-y-6">
+      <div>
+        <h1 className="font-bebas text-4xl tracking-widest text-white mb-2 flex items-center gap-2">
+          <QrCode className="w-8 h-8 text-primary" /> DIGITAL PASS
+        </h1>
+        <p className="font-inter text-gray-400">Your secure access credential for the venue and events.</p>
+      </div>
+
+      <div className="w-full flex justify-center py-8">
+        {pass ? (
+          <div className="flex flex-col items-center gap-6">
+            <motion.div initial={{ opacity: 0, scale: 0.9 }} animate={{ opacity: 1, scale: 1 }} id="digital-pass-container">
+              <DigitalPass participantData={{
+                participantId: profile?.glitchId || pass.participantId,
+                name: profile?.name || 'Hacker',
+                teamName: team?.name || 'Independent',
+                track: team?.track || undefined,
+                college: profile?.college || undefined,
+                status: pass.status,
+                role: 'participant',
+                qrData: JSON.stringify({
+                  participantId: profile?.glitchId || pass.participantId,
+                  teamId: profile?.teamId || '',
+                  token: profile?.qrToken || pass.token,
+                  version: profile?.qrVersion || pass.version
+                })
+              }} />
+            </motion.div>
+            <Button onClick={handleDownloadPass} className="w-full max-w-sm">
+              DOWNLOAD PDF
+            </Button>
+          </div>
+        ) : (
+          <Card className="max-w-md w-full border-dashed border-2 border-white/20 bg-black/50">
+            <CardContent className="p-12 text-center flex flex-col items-center">
+              <div className="w-16 h-16 rounded-full bg-white/5 flex items-center justify-center mb-6">
+                <AlertTriangle className="w-8 h-8 text-yellow-500" />
+              </div>
+              <h3 className="font-bebas text-2xl text-white mb-2 tracking-wider">PASS GENERATION PENDING</h3>
+              <p className="font-inter text-gray-400 text-sm leading-relaxed">
+                Your Digital Pass has not yet been generated by the backend. Passes are automatically issued when your registration is approved.
+              </p>
+            </CardContent>
+          </Card>
+        )}
+      </div>
+    </div>
+  );
+}

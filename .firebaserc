@@ -1,0 +1,17 @@
+{
+  "projects": {
+    "default": "glitch-36"
+  },
+  "targets": {
+    "glitch-36": {
+      "hosting": {
+        "participant": [
+          "glitch-36"
+        ],
+        "admin": [
+          "admin-glitch-36"
+        ]
+      }
+    }
+  }
+}

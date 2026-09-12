@@ -1,0 +1,121 @@
+@import url('https://fonts.googleapis.com/css2?family=Anton&family=Bebas+Neue&family=Inter:wght@400;500;600;700;800&family=Manrope:wght@400;500;600;700;800&family=Oswald:wght@400;500;600;700&family=Space+Grotesk:wght@400;500;600;700;800&family=Permanent+Marker&family=Rubik+Glitch&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  body {
+    @apply bg-background text-white font-inter antialiased overflow-x-hidden;
+  }
+}
+
+@layer components {
+  /* HUD Glass Base Utilities */
+  .hud-glass {
+    @apply bg-black/40 backdrop-blur-md border border-primary/40 shadow-[0_0_15px_rgba(227,6,19,0.3)] relative rounded-2xl;
+  }
+  
+  .hud-glass::before {
+    content: '';
+    @apply absolute inset-0 rounded-2xl border border-primary/20 opacity-50;
+  }
+  
+  .hud-pill {
+    @apply bg-black/60 backdrop-blur-md border border-primary/40 shadow-[0_0_10px_rgba(227,6,19,0.2)] rounded-full px-6 py-2 transition-all hover:bg-black/80 hover:border-primary hover:shadow-[0_0_20px_rgba(227,6,19,0.5)];
+  }
+
+  /* Authentic Minimalist Liquid Glass */
+  .glass-panel {
+    @apply bg-white/5 backdrop-blur-[24px] border border-white/20 shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_12px_40px_rgba(0,0,0,0.4)] relative rounded-2xl;
+  }
+
+  /* Extreme Liquid Glass Bubble/Gel Effect */
+  .liquid-glass {
+    @apply bg-white/5 backdrop-blur-[40px] relative overflow-hidden transition-all duration-300;
+    box-shadow: 
+      inset 0px 1px 1px rgba(255, 255, 255, 0.9), /* Extremely sharp top rim */
+      inset 0px 4px 12px rgba(255, 255, 255, 0.3), /* Thick top highlight */
+      inset 0px -6px 20px rgba(0, 0, 0, 0.5), /* Deep bottom inner shadow */
+      0px 15px 30px rgba(0, 0, 0, 0.4), /* Ambient shadow */
+      0px 5px 10px rgba(0, 0, 0, 0.2); /* Tight drop shadow */
+    border: 1px solid rgba(255, 255, 255, 0.15);
+  }
+  
+  .liquid-glass:hover {
+    @apply bg-white/10;
+    box-shadow: 
+      inset 0px 1px 1px rgba(255, 255, 255, 1), 
+      inset 0px 4px 12px rgba(255, 255, 255, 0.4), 
+      inset 0px -6px 20px rgba(0, 0, 0, 0.6), 
+      0px 20px 40px rgba(0, 0, 0, 0.5),
+      0px 5px 10px rgba(0, 0, 0, 0.3);
+  }
+  
+  /* Sweeping Reflection Animation for Buttons */
+  .glass-button-minimal, .glass-button-primary {
+    @apply relative overflow-hidden transition-all duration-300;
+  }
+  
+  .glass-button-minimal::after, .glass-button-primary::after {
+    content: '';
+    @apply absolute top-0 left-[-100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/20 to-transparent -skew-x-12 transition-all duration-700 ease-in-out;
+  }
+  
+  .glass-button-minimal:hover::after, .glass-button-primary:hover::after {
+    @apply left-[200%];
+  }
+  
+  .glass-button-minimal {
+    @apply bg-white/5 backdrop-blur-[16px] border border-white/20 text-white shadow-[inset_0_1px_1px_rgba(255,255,255,0.4),0_4px_12px_rgba(0,0,0,0.2)] rounded-full hover:bg-white/10 hover:border-white/40;
+  }
+
+  .glass-button-primary {
+    @apply bg-primary/80 backdrop-blur-[16px] text-white font-bebas tracking-wider border border-white/30 shadow-[inset_0_1px_1px_rgba(255,255,255,0.5),0_0_20px_rgba(227,6,19,0.5)] hover:bg-primary hover:shadow-[0_0_30px_rgba(255,107,0,0.8)] hover:scale-[1.03] rounded-lg;
+  }
+}
+
+/* Custom Selection */
+::selection {
+  background: rgba(227, 6, 19, 0.5);
+  color: white;
+}
+
+/* Hide scrollbar for clean aesthetic */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #050505;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #333;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #E30613;
+}
+
+/* Lenis scroll styling */
+html.lenis, html.lenis body {
+  height: auto;
+}
+
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
+.lenis.lenis-stopped {
+  overflow: hidden;
+}
+
+.lenis.lenis-smooth iframe {
+  pointer-events: none;
+}

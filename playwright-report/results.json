@@ -1,0 +1,1670 @@
+{
+  "config": {
+    "argv": [
+      "F:\\Node_js\\node.exe",
+      "F:\\GLITCH 36 2.0\\node_modules\\@playwright\\test\\cli.js",
+      "test"
+    ],
+    "configFile": "F:\\GLITCH 36 2.0\\playwright.config.ts",
+    "rootDir": "F:/GLITCH 36 2.0/tests/runtime",
+    "failOnFlakyTests": false,
+    "forbidOnly": false,
+    "fullyParallel": false,
+    "globalSetup": "F:\\GLITCH 36 2.0\\tests\\runtime\\global.setup.ts",
+    "globalTeardown": null,
+    "globalTimeout": 0,
+    "grep": {},
+    "grepInvert": null,
+    "maxFailures": 0,
+    "metadata": {
+      "actualWorkers": 1
+    },
+    "preserveOutput": "always",
+    "projects": [
+      {
+        "outputDir": "F:/GLITCH 36 2.0/test-results",
+        "repeatEach": 1,
+        "retries": 0,
+        "metadata": {
+          "actualWorkers": 1
+        },
+        "id": "chromium",
+        "name": "chromium",
+        "testDir": "F:/GLITCH 36 2.0/tests/runtime",
+        "testIgnore": [],
+        "testMatch": [
+          "**/*.@(spec|test).?(c|m)[jt]s?(x)"
+        ],
+        "timeout": 30000
+      }
+    ],
+    "quiet": false,
+    "reporter": [
+      [
+        "list",
+        null
+      ],
+      [
+        "json",
+        {
+          "outputFile": "playwright-report/results.json"
+        }
+      ]
+    ],
+    "reportSlowTests": {
+      "max": 5,
+      "threshold": 300000
+    },
+    "shard": null,
+    "tags": [],
+    "updateSnapshots": "missing",
+    "updateSourceMethod": "patch",
+    "version": "1.61.1",
+    "workers": 1,
+    "webServer": {
+      "command": "npx concurrently \"npm run dev\" \"npx firebase emulators:start --only auth,firestore,storage --project glitch-36 --non-interactive\"",
+      "url": "http://localhost:5173",
+      "reuseExistingServer": true,
+      "timeout": 120000,
+      "env": {
+        "VITE_USE_EMULATOR": "true",
+        "CI": "true"
+      }
+    }
+  },
+  "suites": [
+    {
+      "title": "admin.spec.ts",
+      "file": "admin.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Admin Routes",
+          "file": "admin.spec.ts",
+          "line": 22,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Admin Route: admin-dashboard should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 668,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:28.769Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-3ec88-shboard-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-d95b2c93ff1ecead23de",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: participants should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 610,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:29.616Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-9e7d4-cipants-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-0456955bdc0b9a8ddfc9",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: import should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 590,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:30.241Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-Route-import-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-b39677bc9aa317e15fd5",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: staff should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 605,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:30.839Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-Route-staff-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-d226a7c1971d56770ce6",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: classrooms should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 2233,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:31.452Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-c8356-ssrooms-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-fcb33bdf19823db5dbb1",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: results should load cleanly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 0,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 3796,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n    at F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts:34:27",
+                        "location": {
+                          "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                          "column": 27,
+                          "line": 34
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 32 |\u001b[39m       console\u001b[33m.\u001b[39mlog(\u001b[32m'Errors detected:'\u001b[39m\u001b[33m,\u001b[39m errors)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     }\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 |\u001b[39m     expect(errors\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 35 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 36 |\u001b[39m\n \u001b[90m 37 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m route \u001b[36mof\u001b[39m adminRoutes) {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                            "column": 27,
+                            "line": 34
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n\n  32 |       console.log('Errors detected:', errors);\n  33 |     }\n> 34 |     expect(errors.length).toBe(0);\n     |                           ^\n  35 |   });\n  36 |\n  37 |   for (const route of adminRoutes) {\n    at F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts:34:27"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Errors detected: [\n  {\n    type: \u001b[32m'requestfailed'\u001b[39m,\n    url: \u001b[32m'http://localhost:4747/health'\u001b[39m,\n    errorText: \u001b[32m'net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'console.error'\u001b[39m,\n    text: \u001b[32m'Failed to load resource: net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'requestfailed'\u001b[39m,\n    url: \u001b[32m'http://localhost:4747/sessions'\u001b[39m,\n    errorText: \u001b[32m'net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'console.error'\u001b[39m,\n    text: \u001b[32m'Failed to load resource: net::ERR_CONNECTION_REFUSED'\u001b[39m\n  }\n]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:33.694Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-Route-results-should-load-cleanly-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-Route-results-should-load-cleanly-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                        "column": 27,
+                        "line": 34
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-98cd5eae3683cf31f26f",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: evaluations should load cleanly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 1,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 6781,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n    at F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts:34:27",
+                        "location": {
+                          "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                          "column": 27,
+                          "line": 34
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 32 |\u001b[39m       console\u001b[33m.\u001b[39mlog(\u001b[32m'Errors detected:'\u001b[39m\u001b[33m,\u001b[39m errors)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     }\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 |\u001b[39m     expect(errors\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 35 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 36 |\u001b[39m\n \u001b[90m 37 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m route \u001b[36mof\u001b[39m adminRoutes) {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                            "column": 27,
+                            "line": 34
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n\n  32 |       console.log('Errors detected:', errors);\n  33 |     }\n> 34 |     expect(errors.length).toBe(0);\n     |                           ^\n  35 |   });\n  36 |\n  37 |   for (const route of adminRoutes) {\n    at F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts:34:27"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Errors detected: [\n  {\n    type: \u001b[32m'requestfailed'\u001b[39m,\n    url: \u001b[32m'http://localhost:4747/health'\u001b[39m,\n    errorText: \u001b[32m'net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'console.error'\u001b[39m,\n    text: \u001b[32m'Failed to load resource: net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'requestfailed'\u001b[39m,\n    url: \u001b[32m'http://localhost:4747/sessions'\u001b[39m,\n    errorText: \u001b[32m'net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'console.error'\u001b[39m,\n    text: \u001b[32m'Failed to load resource: net::ERR_CONNECTION_REFUSED'\u001b[39m\n  }\n]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:38.053Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-6d294-uations-should-load-cleanly-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-6d294-uations-should-load-cleanly-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                        "column": 27,
+                        "line": 34
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-c65a20b8bbe02aa1bc36",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: submission-manager should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 831,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:45.575Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-52621-manager-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-6cd51a1258f63208e3de",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: submission-settings should load cleanly",
+              "ok": false,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 2,
+                      "parallelIndex": 0,
+                      "status": "failed",
+                      "duration": 6145,
+                      "error": {
+                        "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m",
+                        "stack": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n    at F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts:34:27",
+                        "location": {
+                          "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                          "column": 27,
+                          "line": 34
+                        },
+                        "snippet": "\u001b[0m \u001b[90m 32 |\u001b[39m       console\u001b[33m.\u001b[39mlog(\u001b[32m'Errors detected:'\u001b[39m\u001b[33m,\u001b[39m errors)\u001b[33m;\u001b[39m\n \u001b[90m 33 |\u001b[39m     }\n\u001b[31m\u001b[1m>\u001b[22m\u001b[39m\u001b[90m 34 |\u001b[39m     expect(errors\u001b[33m.\u001b[39mlength)\u001b[33m.\u001b[39mtoBe(\u001b[35m0\u001b[39m)\u001b[33m;\u001b[39m\n \u001b[90m    |\u001b[39m                           \u001b[31m\u001b[1m^\u001b[22m\u001b[39m\n \u001b[90m 35 |\u001b[39m   })\u001b[33m;\u001b[39m\n \u001b[90m 36 |\u001b[39m\n \u001b[90m 37 |\u001b[39m   \u001b[36mfor\u001b[39m (\u001b[36mconst\u001b[39m route \u001b[36mof\u001b[39m adminRoutes) {\u001b[0m"
+                      },
+                      "errors": [
+                        {
+                          "location": {
+                            "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                            "column": 27,
+                            "line": 34
+                          },
+                          "message": "Error: \u001b[2mexpect(\u001b[22m\u001b[31mreceived\u001b[39m\u001b[2m).\u001b[22mtoBe\u001b[2m(\u001b[22m\u001b[32mexpected\u001b[39m\u001b[2m) // Object.is equality\u001b[22m\n\nExpected: \u001b[32m0\u001b[39m\nReceived: \u001b[31m4\u001b[39m\n\n  32 |       console.log('Errors detected:', errors);\n  33 |     }\n> 34 |     expect(errors.length).toBe(0);\n     |                           ^\n  35 |   });\n  36 |\n  37 |   for (const route of adminRoutes) {\n    at F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts:34:27"
+                        }
+                      ],
+                      "stdout": [
+                        {
+                          "text": "Errors detected: [\n  {\n    type: \u001b[32m'requestfailed'\u001b[39m,\n    url: \u001b[32m'http://localhost:4747/sessions'\u001b[39m,\n    errorText: \u001b[32m'net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'console.error'\u001b[39m,\n    text: \u001b[32m'Failed to load resource: net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'requestfailed'\u001b[39m,\n    url: \u001b[32m'http://localhost:4747/health'\u001b[39m,\n    errorText: \u001b[32m'net::ERR_CONNECTION_REFUSED'\u001b[39m\n  },\n  {\n    type: \u001b[32m'console.error'\u001b[39m,\n    text: \u001b[32m'Failed to load resource: net::ERR_CONNECTION_REFUSED'\u001b[39m\n  }\n]\n"
+                        }
+                      ],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:46.576Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-60f0b-ettings-should-load-cleanly-chromium\\test-finished-1.png"
+                        },
+                        {
+                          "name": "error-context",
+                          "contentType": "text/markdown",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-60f0b-ettings-should-load-cleanly-chromium\\error-context.md"
+                        }
+                      ],
+                      "errorLocation": {
+                        "file": "F:\\GLITCH 36 2.0\\tests\\runtime\\admin.spec.ts",
+                        "column": 27,
+                        "line": 34
+                      }
+                    }
+                  ],
+                  "status": "unexpected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-7a0549d7f03f486f2309",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: communications should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 683,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:53.304Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-eab23-cations-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-90b0b8646f324f8b35c3",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: certificates should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 586,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:54.156Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-025df-ficates-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-d91278091a97734af463",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: digital-passes should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 550,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:54.751Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-R-73ddf--passes-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-dd311d9ddd651424ce4f",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            },
+            {
+              "title": "Admin Route: audit-log should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 560,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:55.312Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\admin-Admin-Routes-Admin-Route-audit-log-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "d4043a9dd1ab94463227-1c24e9bc62d43e6a17e3",
+              "file": "admin.spec.ts",
+              "line": 38,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "judge.spec.ts",
+      "file": "judge.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Judge Routes",
+          "file": "judge.spec.ts",
+          "line": 14,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Judge Route: judge-home should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 530,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:55.896Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\judge-Judge-Routes-Judge-R-36768-ge-home-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fa8fc8ea9923860b26f6-b1c254386a2323577625",
+              "file": "judge.spec.ts",
+              "line": 27,
+              "column": 5
+            },
+            {
+              "title": "Judge Route: judge-teams should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 552,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:56.436Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\judge-Judge-Routes-Judge-R-01e8a-e-teams-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fa8fc8ea9923860b26f6-14e49ae4712ffa3bfd5a",
+              "file": "judge.spec.ts",
+              "line": 27,
+              "column": 5
+            },
+            {
+              "title": "Judge Route: judge-evaluation should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 529,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:56.999Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\judge-Judge-Routes-Judge-R-a6201-luation-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fa8fc8ea9923860b26f6-a3dd3bf82b6cd756a8b2",
+              "file": "judge.spec.ts",
+              "line": 27,
+              "column": 5
+            },
+            {
+              "title": "Judge Route: judge-announcements should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 522,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:57.536Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\judge-Judge-Routes-Judge-R-6b2ec-cements-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fa8fc8ea9923860b26f6-662ecb76550b6575601b",
+              "file": "judge.spec.ts",
+              "line": 27,
+              "column": 5
+            },
+            {
+              "title": "Judge Route: judge-profile should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 517,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:58.072Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\judge-Judge-Routes-Judge-R-f1b38-profile-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "fa8fc8ea9923860b26f6-4a7caaaba50a9d2a7771",
+              "file": "judge.spec.ts",
+              "line": 27,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "participant.spec.ts",
+      "file": "participant.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Participant Routes",
+          "file": "participant.spec.ts",
+          "line": 17,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Participant Route: participant-home should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 699,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:58.622Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-ad6c6-nt-home-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-76888a7734dffd6dcf20",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-team should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 929,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:04:59.330Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-5faef-nt-team-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-6c06f72a3692f271c9db",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-submission should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1071,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:00.269Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-cb95e-mission-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-bacc75748ae7817e2e7e",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-resources should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 665,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:01.350Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-03a7b-sources-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-e0bc682182c8be5b6532",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-pass should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 780,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:02.024Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-09428-nt-pass-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-1710a821757223375138",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-certificates should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1140,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:02.811Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-60fd8-ficates-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-f00da4114f344eece8cb",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-profile should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 618,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:03.959Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-b62f2-profile-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-8b57f2653684f958c065",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            },
+            {
+              "title": "Participant Route: participant-orders should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 691,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:04.585Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\participant-Participant-Ro-84532--orders-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "969ead2f7b23ea9f6997-05b9fb467f72d5d91f3c",
+              "file": "participant.spec.ts",
+              "line": 30,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "public.spec.ts",
+      "file": "public.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Public Routes",
+          "file": "public.spec.ts",
+          "line": 4,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Landing Page should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 826,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:05.312Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\public-Public-Routes-Landing-Page-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "349fc90c6061c792a808-5266abcdb3ac945ed5b3",
+              "file": "public.spec.ts",
+              "line": 16,
+              "column": 3
+            },
+            {
+              "title": "Login Page should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 1264,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:06.148Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\public-Public-Routes-Login-Page-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "349fc90c6061c792a808-88b8e92cbac7c3b69638",
+              "file": "public.spec.ts",
+              "line": 23,
+              "column": 3
+            },
+            {
+              "title": "Forgot Password Page should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 874,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:07.422Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\public-Public-Routes-Forgo-b3c75-rd-Page-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "349fc90c6061c792a808-257f96c7bb1c94a2a043",
+              "file": "public.spec.ts",
+              "line": 30,
+              "column": 3
+            }
+          ]
+        }
+      ]
+    },
+    {
+      "title": "volunteer.spec.ts",
+      "file": "volunteer.spec.ts",
+      "column": 0,
+      "line": 0,
+      "specs": [],
+      "suites": [
+        {
+          "title": "Volunteer Routes",
+          "file": "volunteer.spec.ts",
+          "line": 15,
+          "column": 6,
+          "specs": [
+            {
+              "title": "Volunteer Route: volunteer-home should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 544,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:08.315Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\volunteer-Volunteer-Routes-596de-er-home-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08f1675a88add6ac7e53-4c66adc0ec3dbee3322f",
+              "file": "volunteer.spec.ts",
+              "line": 28,
+              "column": 5
+            },
+            {
+              "title": "Volunteer Route: volunteer-scanner should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 550,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:08.869Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\volunteer-Volunteer-Routes-de209-scanner-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08f1675a88add6ac7e53-264fb85ed24763eac11f",
+              "file": "volunteer.spec.ts",
+              "line": 28,
+              "column": 5
+            },
+            {
+              "title": "Volunteer Route: volunteer-search should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 597,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:09.431Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\volunteer-Volunteer-Routes-bb1ac--search-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08f1675a88add6ac7e53-3dc7da1920c5287277b2",
+              "file": "volunteer.spec.ts",
+              "line": 28,
+              "column": 5
+            },
+            {
+              "title": "Volunteer Route: volunteer-classroom should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 565,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:10.043Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\volunteer-Volunteer-Routes-e9478-assroom-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08f1675a88add6ac7e53-9dddacbf5d392356e8c7",
+              "file": "volunteer.spec.ts",
+              "line": 28,
+              "column": 5
+            },
+            {
+              "title": "Volunteer Route: volunteer-announcements should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 520,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:10.622Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\volunteer-Volunteer-Routes-51083-cements-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08f1675a88add6ac7e53-718f26bfb14821125f93",
+              "file": "volunteer.spec.ts",
+              "line": 28,
+              "column": 5
+            },
+            {
+              "title": "Volunteer Route: volunteer-profile should load cleanly",
+              "ok": true,
+              "tags": [],
+              "tests": [
+                {
+                  "timeout": 30000,
+                  "annotations": [],
+                  "expectedStatus": "passed",
+                  "projectId": "chromium",
+                  "projectName": "chromium",
+                  "results": [
+                    {
+                      "workerIndex": 3,
+                      "parallelIndex": 0,
+                      "status": "passed",
+                      "duration": 526,
+                      "errors": [],
+                      "stdout": [],
+                      "stderr": [],
+                      "retry": 0,
+                      "startTime": "2026-09-05T13:05:11.152Z",
+                      "annotations": [],
+                      "attachments": [
+                        {
+                          "name": "screenshot",
+                          "contentType": "image/png",
+                          "path": "F:\\GLITCH 36 2.0\\test-results\\volunteer-Volunteer-Routes-920a4-profile-should-load-cleanly-chromium\\test-finished-1.png"
+                        }
+                      ]
+                    }
+                  ],
+                  "status": "expected"
+                }
+              ],
+              "id": "08f1675a88add6ac7e53-ac22aee4125bc18b2dff",
+              "file": "volunteer.spec.ts",
+              "line": 28,
+              "column": 5
+            }
+          ]
+        }
+      ]
+    }
+  ],
+  "errors": [],
+  "stats": {
+    "startTime": "2026-09-05T13:03:50.209Z",
+    "duration": 81888.712,
+    "expected": 32,
+    "skipped": 0,
+    "unexpected": 3,
+    "flaky": 0
+  }
+}

@@ -1,0 +1,93 @@
+rules_version = '2';
+
+// Craft rules based on https://firebase.google.com/docs/storage/security
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    
+    // Function to verify if user is authenticated
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+    
+    // Function to check file size (e.g. 10MB limit)
+    function isWithinSizeLimit() {
+      return request.resource.size < 10 * 1024 * 1024; 
+    }
+
+    // Function to prevent executable uploads
+    function isNotExecutable() {
+      return !request.resource.contentType.matches('application/x-msdownload') &&
+             !request.resource.name.matches('.*\\.exe') &&
+             !request.resource.name.matches('.*\\.bat') &&
+             !request.resource.name.matches('.*\\.sh');
+    }
+
+    // Function to check if user is an organizer or super admin
+    function isStaffAdmin() {
+      return isAuthenticated() && (
+        firestore.get(/databases/(default)/documents/staff/$(request.auth.uid)).data.role == 'organizer' ||
+        firestore.get(/databases/(default)/documents/staff/$(request.auth.uid)).data.role == 'super_admin'
+      );
+    }
+
+    match /{allPaths=**} {
+      allow read: if isAuthenticated();
+      // Block general writes at the root level.
+      allow write: if false;
+    }
+
+    // Certificates Folder
+    match /certificates/{fileName} {
+      // Publicly readable for verification
+      allow read: if true; 
+      // Only Organizers can upload certificates
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+
+    // Public Assets (Gallery, Sponsor Logos, Catalog)
+    match /catalog/{fileName} {
+      allow read: if true;
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+    
+    match /gallery/{fileName} {
+      allow read: if true;
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+    
+    match /sponsor-logos/{fileName} {
+      allow read: if true;
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+
+    // Profiles (Avatar images)
+    match /profiles/{fileName} {
+      allow read: if true; // Profile pictures are usually public to other users
+      // Users can only upload their own avatars (filename must start with their UID)
+      allow write: if isAuthenticated() && fileName.matches(request.auth.uid + '.*') && isWithinSizeLimit() && request.resource.contentType.matches('image/.*');
+    }
+
+    // Documents / Rulebooks / Presentations (Internal logic)
+    match /documents/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+    
+    match /rulebooks/{fileName} {
+      allow read: if true; // Rulebooks might be public
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+
+    match /presentations/{fileName} {
+      allow read: if isAuthenticated();
+      allow write: if isStaffAdmin() && isWithinSizeLimit() && isNotExecutable();
+    }
+    
+    match /videos/{fileName} {
+      allow read: if true;
+      // Videos can be slightly larger (e.g., 50MB)
+      allow write: if isAuthenticated() && request.resource.size < 50 * 1024 * 1024 && isNotExecutable();
+    }
+  }
+}

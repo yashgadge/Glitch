@@ -1,0 +1,356 @@
+rules_version = '2';
+
+service cloud.firestore {
+  match /databases/{database}/documents {
+    
+    // Core helper functions
+    function isAuthenticated() {
+      return request.auth != null;
+    }
+
+    function isUser(userId) {
+      return isAuthenticated() && request.auth.uid == userId;
+    }
+    
+    function getRole() {
+      let isStaff = exists(/databases/$(database)/documents/staff/$(request.auth.uid));
+      let isPart = exists(/databases/$(database)/documents/participants/$(request.auth.uid));
+      
+      let staffRole = isStaff ? get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.get('role', null) : null;
+      let partRole = isPart ? get(/databases/$(database)/documents/participants/$(request.auth.uid)).data.get('role', null) : null;
+      
+      // Also check if roles array exists for staff
+      let staffRoles = isStaff ? get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.get('roles', []) : [];
+      let firstStaffRole = staffRoles.size() > 0 ? staffRoles[0] : null;
+      
+      let finalStaffRole = staffRole != null ? staffRole : firstStaffRole;
+      
+      return finalStaffRole != null ? finalStaffRole : (partRole != null ? partRole : 'none');
+    }
+
+    // Comprehensive role permission mapping (Fallbacks)
+    function getRolePermissions(role) {
+      return (role == 'super_admin' || role == 'Super Admin' || role == 'admin' || role == 'Admin') ? ['*'] :
+             role == 'organizer' ? ['participants.read', 'participants.manage', 'teams.read', 'teams.manage', 'judges.read', 'judges.assign', 'volunteers.read', 'volunteers.manage', 'announcements.create', 'analytics.view', 'certificates.issue', 'settings.manage', 'schedule.manage', 'qr.manage', 'audit.view', 'permissions.manage', 'tasks.manage'] :
+             role == 'judge' ? ['evaluations.view', 'evaluations.submit', 'schedule.view', 'announcements.view'] :
+             role == 'volunteer' ? ['qr.scan', 'team.eliminate', 'attendance.verify', 'meals.verify', 'swag.verify', 'announcements.view', 'schedule.view', 'participant.search', 'incident.create', 'incident.view', 'profile.edit'] :
+             role == 'mentor' ? ['mentoring.notes.create', 'schedule.view', 'announcements.view'] :
+             role == 'participant' ? ['profile.manage', 'team.create', 'team.join', 'submissions.create'] :
+             [];
+    }
+
+    function hasPermission(permission) {
+      let isAuth = isAuthenticated();
+      let isStaff = isAuth ? exists(/databases/$(database)/documents/staff/$(request.auth.uid)) : false;
+      let isPart = (isAuth && !isStaff) ? exists(/databases/$(database)/documents/participants/$(request.auth.uid)) : false;
+      
+      let role = getRole();
+      let basePerms = isAuth ? getRolePermissions(role) : [];
+      
+      let staffCustom = isStaff ? get(/databases/$(database)/documents/staff/$(request.auth.uid)).data.get('customPermissions', []) : [];
+      let partCustom = isPart ? get(/databases/$(database)/documents/participants/$(request.auth.uid)).data.get('customPermissions', []) : [];
+      let customPerms = isStaff ? staffCustom : (isPart ? partCustom : []);
+      
+      return isAuth && (basePerms.hasAny(['*']) || basePerms.hasAny([permission]) || customPerms.hasAny([permission]));
+    }
+
+    // PARTICIPANTS COLLECTION
+    match /participants/{userId} {
+      allow read: if isAuthenticated();
+      allow create: if (isUser(userId) && request.resource.data.get('role', '') == 'participant') || hasPermission('participants.manage');
+      allow update: if isUser(userId) || hasPermission('participants.manage') || hasPermission('qr.scan') || 
+                    (isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['teamId']));
+      allow delete: if hasPermission('participants.delete');
+    }
+
+    // STAFF COLLECTION
+    match /staff/{userId} {
+      allow read: if isUser(userId) || hasPermission('permissions.manage') || hasPermission('staff.view');
+      allow create, delete: if hasPermission('permissions.manage');
+      allow update: if hasPermission('permissions.manage') || 
+                    (isUser(userId) && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['availabilityStatus', 'availabilityReason', 'reservedUntil', 'updatedAt']));
+    }
+
+    // TEAMS COLLECTION
+    match /teams/{teamId} {
+      allow read: if isAuthenticated();
+      allow create: if hasPermission('team.create') || hasPermission('teams.manage') || (
+        isAuthenticated() && request.resource.data.get('leaderId', '') == request.auth.uid
+      );
+      allow update: if hasPermission('teams.manage') || hasPermission('classrooms.moveTeams') || (
+        isAuthenticated() && resource.data.leaderId == request.auth.uid && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['name', 'members', 'memberIds', 'pendingMemberIds', 'trackId', 'track', 'problemId', 'trackLocked', 'paymentStatus', 'status', 'updatedAt'])
+      ) || (
+        isAuthenticated() && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['pendingMemberIds', 'memberIds', 'updatedAt'])
+      );
+      allow delete: if hasPermission('teams.manage');
+    }
+    
+    // DIGITAL PASSES
+    match /digitalPasses/{passId} {
+      allow read: if isAuthenticated() && (resource.data.participantId == request.auth.uid || hasPermission('qr.scan') || hasPermission('participants.manage'));
+      allow create, update, delete: if false; // Only backend can mutate passes
+    }
+
+    // EVENT PRODUCTS (CATALOG)
+    match /eventProducts/{productId} {
+      allow read: if true;
+      allow create, update, delete: if hasPermission('settings.manage');
+    }
+    
+    // AUDIT LOGS
+    match /auditLogs/{logId} {
+      allow read: if hasPermission('audit.view') || (isAuthenticated() && resource.data.actorId == request.auth.uid);
+      allow create: if isAuthenticated(); 
+    }
+
+    // INVITATIONS
+    match /invitations/{invitationId} {
+      allow read: if true;
+      allow create, update: if hasPermission('permissions.manage');
+      allow delete: if true;
+    }
+    
+    // TASKS / SHIFTS / ROOMS
+    match /shifts/{shiftId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('schedule.manage');
+    }
+    
+    match /classrooms/{roomId} {
+      allow read: if isAuthenticated();
+      allow create, delete: if hasPermission('schedule.manage') || hasPermission('classrooms.manage');
+      allow update: if hasPermission('schedule.manage') || hasPermission('classrooms.manage') || hasPermission('classrooms.moveTeams') || hasPermission('classrooms.assignTeams');
+    }
+    
+    match /tasks/{taskId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('tasks.manage');
+    }
+
+    // EVALUATION PLATFORM
+    match /evaluations/{evalId} {
+      allow read: if hasPermission('evaluations.view') || hasPermission('evaluations.submit');
+      allow write: if isAuthenticated(); // Re-enabled for cascade deletes and manual updates
+    }
+    
+    match /evaluationAssignments/{assignmentId} {
+      allow read: if hasPermission('evaluations.view') || (isAuthenticated() && resource.data.judgeId == request.auth.uid) || hasPermission('judges.read');
+      allow write: if hasPermission('evaluations.view') || hasPermission('teams.manage') || hasPermission('judges.assign');
+    }
+
+    match /mentorSessions/{sessionId} {
+      allow read: if hasPermission('mentoring.notes.create') || (
+        isAuthenticated() && resource.data.mentorId == request.auth.uid
+      );
+      allow create, update: if hasPermission('mentoring.notes.create') && (
+        resource == null || resource.data.mentorId == request.auth.uid
+      );
+    }
+
+    // VOLUNTEER OPERATIONS
+    match /scans/{scanId} {
+      allow create: if hasPermission('qr.scan');
+      allow read: if hasPermission('analytics.view');
+    }
+
+    match /incidents/{incidentId} {
+      allow create: if hasPermission('incidents.create');
+      allow read: if hasPermission('incident.view') || (
+        isAuthenticated() && resource.data.reporterId == request.auth.uid
+      );
+      allow update: if hasPermission('settings.manage');
+    }
+
+    // COMMUNICATION ENGINE
+    match /notifications/{notifId} {
+      allow read: if isAuthenticated() && (
+        resource.data.recipientId == request.auth.uid || 
+        resource.data.recipientId == 'BROADCAST' || 
+        resource.data.recipientId == 'ROLE:' + getRole()
+      );
+      allow update: if isAuthenticated() && resource.data.recipientId == request.auth.uid;
+      allow create: if hasPermission('announcements.create') || (isAuthenticated() && request.resource.data.recipientId != null);
+    }
+
+    match /mail/{mailId} {
+      allow create: if hasPermission('announcements.create');
+      allow read: if hasPermission('announcements.create');
+    }
+
+    // CERTIFICATE ENGINE
+    match /certificates/{certId} {
+      allow read: if true; 
+      allow write: if hasPermission('certificates.issue');
+    }
+
+    // RESOURCES ENGINE
+    match /resources/{resourceId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage');
+    }
+
+    // SUBMISSIONS ENGINE & CONFIG
+    match /submissions/{subId} {
+      allow read: if isAuthenticated(); 
+      allow write: if isAuthenticated(); // Re-enabled for drafts and admin updates
+    }
+    
+    match /submissionVersions/{versionId} {
+      allow read: if isAuthenticated();
+      allow write: if isAuthenticated(); // Re-enabled for drafts
+    }
+
+    match /changeRequests/{reqId} {
+      allow read: if isAuthenticated();
+      allow create: if hasPermission('evaluations.submit') || hasPermission('settings.manage') || isAuthenticated();
+      allow update: if hasPermission('evaluations.submit') || hasPermission('settings.manage');
+    }
+    
+    match /roundSubmissionConfigs/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage');
+    }
+    
+    match /submissionFields/{fieldId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage');
+    }
+    
+    match /submissionConfig/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage');
+    }
+    
+    match /eventConfig/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage');
+    }
+
+    // DIGITAL PASSES
+    match /digitalPasses/{passId} {
+      allow read: if isAuthenticated();
+      // Allow admins or the participant themselves (during registration) to create a pass
+      allow create: if hasPermission('participants.manage') || hasPermission('qr.manage') || (isAuthenticated() && request.resource.data.participantId == request.auth.uid);
+      allow update: if hasPermission('qr.manage') || 
+                    (hasPermission('qr.scan') && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['lastScannedAt', 'lastScannedBy', 'scanCount', 'lastScanPurpose'])) ||
+                    (hasPermission('pass.revoke') && request.resource.data.diff(resource.data).affectedKeys().hasOnly(['status', 'isRevoked', 'blockedReason']));
+    }
+
+    match /scanLogs/{logId} {
+      allow create: if false; // Migrated to Cloud Functions
+      allow read: if hasPermission('analytics.view') || hasPermission('qr.manage') || hasPermission('attendance.verify') || (isAuthenticated() && resource.data.volunteerId == request.auth.uid);
+    }
+
+    // ORDERS
+    match /orders/{orderId} {
+      allow read: if isAuthenticated() && (
+        resource.data.participantId == request.auth.uid || 
+        hasPermission('participants.manage') || 
+        hasPermission('analytics.view')
+      );
+      allow create: if isAuthenticated() && request.resource.data.participantId == request.auth.uid;
+      allow update: if hasPermission('participants.manage') || (isAuthenticated() && resource.data.participantId == request.auth.uid);
+      allow delete: if hasPermission('participants.manage') || (isAuthenticated() && resource.data.participantId == request.auth.uid);
+    }
+
+    // ENTITLEMENTS & REDEMPTIONS (NEW)
+    match /eventProducts/{productId} {
+      allow read: if true;
+      allow write: if hasPermission('catalog.edit') || hasPermission('settings.manage');
+    }
+
+    match /entitlements/{entitlementId} {
+      allow read: if isAuthenticated() && (
+        resource.data.participantId == request.auth.uid || 
+        hasPermission('participants.manage') ||
+        hasPermission('qr.scan') ||
+        hasPermission('qr.redeemAddon')
+      );
+      // Entitlements are created server-side or by admins. Clients NEVER create them.
+      allow create: if hasPermission('addons.grant') || (isAuthenticated() && request.resource.data.participantId == request.auth.uid);
+      
+      // Update allowed by admin
+      allow update: if hasPermission('addons.grant') || (isAuthenticated() && resource.data.participantId == request.auth.uid);
+      allow delete: if hasPermission('addons.grant');
+    }
+
+    match /redemptionRecords/{redemptionId} {
+      allow read: if isAuthenticated() && (
+        resource.data.participantId == request.auth.uid || 
+        hasPermission('participants.manage') ||
+        hasPermission('qr.redeemAddon') ||
+        hasPermission('analytics.view') ||
+        resource.data.volunteerUid == request.auth.uid
+      );
+      allow create: if false; // Migrated to Cloud Functions
+      allow update, delete: if hasPermission('addons.grant');
+    }
+
+    // ATTENDANCE (NEW)
+    match /attendance/{attendanceId} {
+      allow read: if isAuthenticated();
+      allow create: if hasPermission('qr.scan') || hasPermission('attendance.verify');
+      allow update, delete: if hasPermission('participants.manage') || hasPermission('attendance.verify');
+    }
+
+    // MISSING CORE COLLECTIONS
+    match /tracks/{trackId} {
+      allow read: if true;
+      allow write: if hasPermission('settings.manage') || hasPermission('tracks.manage');
+    }
+
+    match /problemStatements/{psId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage') || hasPermission('tracks.manage');
+    }
+
+    match /counters/{counterId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('permissions.manage') || hasPermission('participants.manage') || (isAuthenticated() && counterId == 'participant');
+    }
+
+    match /rankings/{rankingId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('analytics.view') || hasPermission('participants.manage');
+    }
+
+    match /rankingSnapshots/{snapshotId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('analytics.view') || hasPermission('participants.manage');
+    }
+
+    match /results/{resultId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('analytics.view') || hasPermission('participants.manage');
+    }
+
+    match /rounds/{roundId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage') || hasPermission('rounds.edit');
+    }
+
+    match /evaluationVersions/{versionId} {
+      allow read: if hasPermission('evaluations.view') || hasPermission('evaluations.submit');
+      allow write: if isAuthenticated(); // Re-enabled for cascade deletes
+    }
+
+    match /evaluationConfig/{configId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('settings.manage');
+    }
+
+    match /announcements/{docId} {
+      allow read: if isAuthenticated();
+      allow write: if hasPermission('announcements.create');
+    }
+
+    match /system/{document} {
+      allow read: if true;
+      allow write: if hasPermission('settings.manage');
+    }
+
+    match /{document=**} {
+      allow read, write: if false;
+    }
+  }
+}

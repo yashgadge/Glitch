@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>GLITCH 36</title>
+    <style>
+      @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@400;500;600;700&display=swap');
+      
+      body { margin: 0; background-color: #050505; overflow: hidden; }
+      .initial-loader {
+        display: flex; flex-direction: column; justify-content: center; align-items: center;
+        height: 100vh; width: 100vw; background-color: #050505; position: relative; z-index: 9999;
+      }
+      .ambient-glow {
+        position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);
+        width: 50vw; height: 50vw; max-width: 500px; max-height: 500px;
+        background-color: rgba(227, 6, 19, 0.2); filter: blur(100px); border-radius: 50%;
+        opacity: 0.6; pointer-events: none;
+      }
+      .loader-content {
+        position: relative; z-index: 10; display: flex; flex-direction: column; align-items: center; justify-content: center; text-align: center;
+      }
+      .logo-text {
+        font-family: 'Bebas Neue', sans-serif; font-size: 4rem; letter-spacing: 0.1em; color: #ffffff; margin-top: 0; margin-bottom: 0.5rem;
+      }
+      @media (min-width: 768px) { .logo-text { font-size: 5rem; } }
+      .text-primary { color: #e30613; }
+      .progress-container {
+        width: 192px; height: 2px; background-color: rgba(255,255,255,0.1); border-radius: 9999px; overflow: hidden; margin: 0 auto 1.5rem auto; position: relative;
+      }
+      .progress-bar {
+        position: absolute; top: 0; bottom: 0; left: 0; background-color: #e30613; width: 33.333%;
+        animation: slide 1.5s ease-in-out infinite;
+      }
+      @keyframes slide {
+        0% { transform: translateX(-100%); }
+        100% { transform: translateX(300%); }
+      }
+      .loading-text {
+        font-family: monospace; font-size: 10px; color: rgba(227, 6, 19, 0.7); text-transform: uppercase; letter-spacing: 0.3em;
+        animation: pulse 1.5s ease-in-out infinite; margin: 0;
+      }
+      @keyframes pulse { 0%, 100% { opacity: 0.5; } 50% { opacity: 1; } }
+    </style>
+  </head>
+  <body>
+    <div id="root">
+      <div class="initial-loader">
+        <div class="ambient-glow"></div>
+        <div class="loader-content">
+          <h1 class="logo-text">GLITCH <span class="text-primary">36</span></h1>
+          <div class="progress-container"><div class="progress-bar"></div></div>
+          <p class="loading-text">SYSTEM INITIATING</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

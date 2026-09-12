@@ -1,0 +1,18 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "http://localhost:5173",
+      "localStorage": [
+        {
+          "name": "feedback-toolbar-theme",
+          "value": "dark"
+        },
+        {
+          "name": "feedback-toolbar-settings",
+          "value": "{\"outputDetail\":\"standard\",\"autoClearAfterCopy\":false,\"annotationColorId\":\"blue\",\"blockInteractions\":true,\"reactEnabled\":true,\"markerClickBehavior\":\"edit\",\"webhookUrl\":\"\",\"webhooksEnabled\":true}"
+        }
+      ]
+    }
+  ]
+}
