@@ -9,16 +9,30 @@ import Footer from '../components/layout/Footer';
 
 gsap.registerPlugin(ScrollTrigger);
 
-export default function LandingPage() {
+  import { useNavigate } from 'react-router-dom';
+  import { useAuth } from '@shared/contexts/AuthContext';
 
-  useEffect(() => {
-    // Check for secret URL parameter to open staff gateway
-    const params = new URLSearchParams(window.location.search);
-    if (params.get('access') === 'mission-control') {
-      // Clean up the URL so it doesn't linger in history or address bar
-      window.history.replaceState({}, '', window.location.pathname);
-    }
-  }, []);
+  export default function LandingPage() {
+    const { user, profileData, loading } = useAuth();
+    const navigate = useNavigate();
+
+    useEffect(() => {
+      // Auto-redirect authenticated users to dashboard instead of making them stay on landing page
+      if (!loading && user && profileData?.registrationStatus === 'completed') {
+        navigate('/dashboard', { replace: true });
+      } else if (!loading && user && profileData?.registrationStatus === 'incomplete') {
+        navigate('/register', { replace: true });
+      }
+    }, [user, profileData, loading, navigate]);
+
+    useEffect(() => {
+      // Check for secret URL parameter to open staff gateway
+      const params = new URLSearchParams(window.location.search);
+      if (params.get('access') === 'mission-control') {
+        // Clean up the URL so it doesn't linger in history or address bar
+        window.history.replaceState({}, '', window.location.pathname);
+      }
+    }, []);
 
   useEffect(() => {
     const lenis = new Lenis({

@@ -71,29 +71,62 @@ export default function ParticipantHome() {
 
   return (
     <div className="space-y-8">
-      {/* Registration Payment Pending Banner */}
-      {team && team.paymentStatus === 'PAYMENT_PENDING' && (
+      {/* Action Required Banner */}
+      {!team && (
         <motion.div 
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
-          className="bg-red-950/40 border border-red-500/50 rounded-2xl overflow-hidden relative"
+          className="bg-black/60 border border-white/10 rounded-xl overflow-hidden relative mb-6"
         >
-          <div className="absolute inset-0 bg-gradient-to-r from-red-600/20 to-transparent pointer-events-none" />
           <div className="relative p-6 lg:p-8 z-10 w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
             <div>
-              <h2 className="font-bebas text-3xl tracking-wide text-red-500 mb-2">
-                REGISTRATION NOT CONFIRMED
+              <h2 className="font-bebas text-3xl tracking-wide text-white mb-3 flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
+                ACTION REQUIRED: COMPLETE REGISTRATION
               </h2>
-              <p className="font-inter text-gray-300 text-base max-w-xl">
-                Your team registration fee is still pending. Complete payment to confirm your team and unlock Digital Passes.
+              <p className="font-inter text-gray-400 text-sm max-w-2xl leading-relaxed">
+                You have not joined or created a team yet. Please assemble your team and complete the payment to secure your spot.
               </p>
-              <div className="mt-2 text-sm text-red-400/80 font-medium tracking-wide uppercase">
-                Payment pending • Digital Pass locked
+              <div className="mt-4 inline-block px-3 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-xs text-red-400 font-bebas tracking-widest">
+                TEAM PENDING
               </div>
             </div>
-            <Link to="/dashboard/team" className="shrink-0">
-              <Button variant="default" className="bg-red-600 hover:bg-red-700 text-white border-0">
-                COMPLETE REGISTRATION
+            <Link to="/dashboard/team" className="shrink-0 w-full md:w-auto mt-4 md:mt-0">
+              <Button variant="default" className="w-full md:w-auto bg-white text-black hover:bg-gray-200 border-0 font-bebas text-lg px-8 py-6">
+                CREATE / JOIN TEAM <ChevronRight className="w-5 h-5 ml-2" />
+              </Button>
+            </Link>
+          </div>
+        </motion.div>
+      )}
+
+      {team && team.paymentStatus?.toLowerCase() !== 'paid' && team.status?.toLowerCase() !== 'locked' && (
+        <motion.div 
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          className="bg-black/60 border border-white/10 rounded-xl overflow-hidden relative mb-6"
+        >
+          <div className="relative p-6 lg:p-8 z-10 w-full flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+            <div>
+              <h2 className="font-bebas text-3xl tracking-wide text-white mb-3 flex items-center gap-3">
+                <span className="w-3 h-3 rounded-full bg-red-500 animate-pulse"></span>
+                ACTION REQUIRED: COMPLETE REGISTRATION
+              </h2>
+              <p className="font-inter text-gray-400 text-sm max-w-2xl leading-relaxed">
+                Your team registration fee is still pending. Complete the payment to confirm your team and unlock your Digital Passes.
+              </p>
+              <div className="mt-4 flex flex-wrap items-center gap-3">
+                <div className="inline-block px-3 py-1 rounded-full border border-red-500/30 bg-red-500/10 text-xs text-red-400 font-bebas tracking-widest">
+                  PAYMENT PENDING
+                </div>
+                <div className="inline-block px-3 py-1 rounded-full border border-gray-500/30 bg-gray-800 text-xs text-gray-400 font-bebas tracking-widest">
+                  DIGITAL PASS LOCKED
+                </div>
+              </div>
+            </div>
+            <Link to="/dashboard/team" className="shrink-0 w-full md:w-auto mt-4 md:mt-0">
+              <Button variant="default" className="w-full md:w-auto bg-white text-black hover:bg-gray-200 border-0 font-bebas text-lg px-8 py-6">
+                PAY REGISTRATION FEE <ChevronRight className="w-5 h-5 ml-2" />
               </Button>
             </Link>
           </div>

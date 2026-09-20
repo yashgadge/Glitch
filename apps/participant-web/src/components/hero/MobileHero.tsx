@@ -38,9 +38,12 @@ export default function MobileHero() {
           </p>
         </div>
         
-        <h1 className="font-rubik_glitch text-[15vw] leading-none text-white tracking-widest drop-shadow-[0_0_30px_rgba(227,6,19,0.5)] glitch-text">
-          GLITCH
+        <h1 className="font-rubik_glitch text-[15vw] leading-none text-white tracking-widest drop-shadow-[0_0_30px_rgba(227,6,19,0.5)] glitch-text" data-text="PANDORA">
+          PANDORA
         </h1>
+        <p className="font-bebas text-xl text-white tracking-[0.25em] mt-1 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+          <span className="text-gray-400">X</span> GLITCH
+        </p>
         
         <h2 
           className="font-anton text-[22vw] leading-none tracking-tighter select-none mt-[-10px]"
@@ -57,6 +60,14 @@ export default function MobileHero() {
            <p className="font-inter text-[9px] tracking-[0.2em] text-gray-400 font-bold">&lt;CODE&gt;</p>
            <p className="font-inter text-[9px] tracking-[0.2em] text-white font-bold my-1">CONQUER</p>
            <p className="font-inter text-[9px] tracking-[0.2em] text-gray-400 font-bold">&lt;/CODE&gt;</p>
+        </div>
+
+        <div className="relative group cursor-pointer pointer-events-auto mt-4">
+           <div className="absolute inset-0 bg-yellow-500/20 rounded-full blur group-hover:opacity-100 opacity-50 transition-opacity" />
+           <div className="relative bg-black/60 border border-yellow-500/50 backdrop-blur-xl px-5 py-1.5 rounded-full flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+              <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
+              <span className="font-bebas tracking-wider text-yellow-500 text-base pt-0.5">REGISTRATION CLOSES: <span className="text-white">26 SEPT, 12:00 AM</span></span>
+           </div>
         </div>
       </div>
 
@@ -114,7 +125,7 @@ export default function MobileHero() {
           <div className="flex-1 flex items-center gap-3">
             <Calendar className="w-5 h-5 text-white/80" />
             <div className="flex flex-col">
-              <span className="font-inter text-[10px] tracking-widest text-white font-bold">OCTOBER 10-11,</span>
+              <span className="font-inter text-[10px] tracking-widest text-yellow-500 font-bold">OCTOBER 24-25,</span>
               <span className="font-inter text-[10px] tracking-widest text-white/80 font-medium">2026</span>
             </div>
           </div>
@@ -130,12 +141,24 @@ export default function MobileHero() {
 
         {/* Prize Card */}
         <motion.div variants={itemVariants} className="liquid-glass rounded-[2.5rem] p-8 flex flex-col items-center justify-center w-full">
-          <Trophy className="w-8 h-8 text-white mb-3 drop-shadow-[0_0_10px_rgba(255,255,255,0.8)]" />
+          <Trophy className="w-8 h-8 text-yellow-500 mb-3 drop-shadow-[0_0_10px_rgba(234,179,8,0.8)]" />
           <span className="font-inter text-[10px] tracking-widest text-white font-bold mb-1">WIN EXCITING</span>
           <span className="font-inter text-[10px] tracking-widest text-white font-bold mb-2">CASH PRIZES WORTH</span>
           <span className="font-bebas text-5xl text-white tracking-widest drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
             <span className="text-2xl mr-1">₹</span>40,000+
           </span>
+        </motion.div>
+
+        {/* Registration Fee */}
+        <motion.div variants={itemVariants} className="w-full">
+          <div className="liquid-glass w-full p-4 border border-[#3b82f6]/40 rounded-xl bg-black/60 backdrop-blur-xl flex items-center justify-center gap-3 cursor-pointer hover:border-[#3b82f6]/80 transition-colors">
+            <svg className="w-5 h-5 text-[#3b82f6]" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
+            </svg>
+            <p className="font-bebas text-xl text-[#3b82f6] tracking-wider pt-1">
+              REGISTRATION FEE: ₹599
+            </p>
+          </div>
         </motion.div>
 
         {/* Stats Card */}

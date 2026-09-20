@@ -14,10 +14,14 @@ import ParticipantCertificates from './ParticipantCertificates';
 import ParticipantOrders from './ParticipantOrders';
 import ParticipantProfile from './ParticipantProfile';
 import ParticipantTracks from './ParticipantTracks';
+import RegistrationDeadlineBanner from '../../../components/dashboard/RegistrationDeadlineBanner';
 
 export function ParticipantModule() {
   return (
     <DashboardLayout title="HACKER DASHBOARD">
+        <div className="mb-6">
+          <RegistrationDeadlineBanner />
+        </div>
         <Routes>
           <Route path="/" element={<ParticipantHome />} />
           <Route path="/pass" element={<ParticipantPass />} />

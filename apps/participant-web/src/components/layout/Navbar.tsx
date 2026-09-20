@@ -58,7 +58,7 @@ export default function Navbar() {
         <div className="max-w-[1400px] mx-auto px-6 md:px-12 flex items-center justify-between w-full">
         {/* Logo */}
         <div className="flex items-center gap-1 cursor-pointer">
-          <span className="font-bebas text-3xl md:text-4xl text-white tracking-wider drop-shadow-md">GLITCH</span>
+          <span className="font-bebas text-3xl md:text-4xl text-white tracking-wider drop-shadow-md">PANDORA <span className="font-inter font-light text-xl md:text-2xl text-gray-400 mx-1">X</span> GLITCH</span>
           <span className="font-bebas text-lg md:text-xl text-primary mt-1 drop-shadow-md">36</span>
         </div>
 

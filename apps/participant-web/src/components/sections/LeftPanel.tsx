@@ -27,7 +27,7 @@ export default function LeftPanel() {
       <motion.div variants={itemVariants} className="hud-glass p-4 px-6 flex flex-1 min-w-[220px] items-start gap-4">
         <Calendar className="w-5 h-5 text-primary shrink-0 mt-1 drop-shadow-md" />
         <div>
-          <p className="font-inter text-[11px] tracking-[0.2em] text-white font-bold drop-shadow-md">OCTOBER 10-11,</p>
+          <p className="font-inter text-[11px] tracking-[0.2em] text-white font-bold drop-shadow-md">OCTOBER 24-25,</p>
           <p className="font-inter text-[11px] tracking-[0.2em] text-white font-bold drop-shadow-md">2026</p>
         </div>
       </motion.div>

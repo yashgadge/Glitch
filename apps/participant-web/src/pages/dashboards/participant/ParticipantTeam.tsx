@@ -22,7 +22,7 @@ export default function ParticipantTeam() {
   const [members, setMembers] = useState<Participant[]>([]);
   const [pendingMembers, setPendingMembers] = useState<Participant[]>([]);
   const [loading, setLoading] = useState(true);
-  const [feeAmount, setFeeAmount] = useState<number>(1500);
+  const [feeAmount, setFeeAmount] = useState<number>(599);
   const [isRegistrationOpen, setIsRegistrationOpen] = useState(true);
 
   // Form State

@@ -113,7 +113,7 @@ export default function Hero() {
         <div className="absolute inset-0 bg-black/40" />
         
         {/* Layer 2: "GLITCH" Typography & Top Text (Desktop Only) */}
-        <div ref={glitchRef} className="hidden xl:flex absolute top-[40%] 2xl:top-[42%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full justify-center pointer-events-none z-10">
+        <div ref={glitchRef} className="hidden xl:flex absolute top-[36%] 2xl:top-[38%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full justify-center pointer-events-none z-10">
           <motion.div 
             style={{ x: textX, y: textY }}
             initial={{ opacity: 0, scale: 0.9 }}
@@ -130,14 +130,17 @@ export default function Hero() {
             </p>
           </div>
           
-          <h1 className="font-rubik_glitch text-[12vw] xl:text-[150px] leading-none text-white tracking-widest glitch-text relative z-10">
-            GLITCH
+          <h1 className="font-rubik_glitch text-[12vw] xl:text-[150px] leading-none text-white tracking-widest glitch-text relative z-10" data-text="PANDORA">
+            PANDORA
           </h1>
+          <p className="font-bebas text-2xl xl:text-4xl text-white tracking-[0.25em] mt-1 xl:mt-2 relative z-10 drop-shadow-[0_0_15px_rgba(255,255,255,0.5)]">
+            <span className="text-gray-400">X</span> GLITCH
+          </p>
           </motion.div>
         </div>
 
         {/* Layer 3: "36" Typography (Hollow Neon Style) & Bottom Text (Desktop Only) */}
-        <div ref={numberRef} className="hidden xl:flex absolute top-[58%] 2xl:top-[62%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full justify-center pointer-events-none z-20">
+        <div ref={numberRef} className="hidden xl:flex absolute top-[62%] 2xl:top-[66%] left-1/2 -translate-x-1/2 -translate-y-1/2 w-full justify-center pointer-events-none z-20">
           <motion.div 
             style={{ x: numberX, y: numberY }}
             initial={{ opacity: 0, scale: 0.5, rotate: -5 }}
@@ -159,6 +162,14 @@ export default function Hero() {
              <p className="font-inter text-[11px] tracking-[0.2em] text-gray-400 font-bold">&lt;CODE&gt;</p>
              <p className="font-inter text-[11px] tracking-[0.2em] text-white font-bold my-1">CONQUER</p>
              <p className="font-inter text-[11px] tracking-[0.2em] text-gray-400 font-bold">&lt;/CODE&gt;</p>
+          </div>
+          
+          <div className="relative group cursor-pointer pointer-events-auto">
+             <div className="absolute inset-0 bg-yellow-500/20 rounded-full blur group-hover:opacity-100 opacity-50 transition-opacity" />
+             <div className="relative bg-black/60 border border-yellow-500/50 backdrop-blur-xl px-6 py-2 rounded-full flex items-center gap-3 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
+                <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
+                <span className="font-bebas tracking-wider text-yellow-500 text-lg sm:text-xl pt-0.5">REGISTRATION CLOSES: <span className="text-white">26 SEPT, 12:00 AM</span></span>
+             </div>
           </div>
           </motion.div>
         </div>

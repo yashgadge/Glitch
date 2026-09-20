@@ -25,8 +25,8 @@ export function LoadingScreen({ message = "INITIALIZING SYSTEM..." }: { message?
           {/* Main Content */}
           <div className="relative z-10 flex flex-col items-center">
             {/* Logo Text */}
-            <h1 className="font-bebas text-5xl md:text-7xl tracking-widest text-white mb-2">
-              GLITCH <span className="text-primary">36</span>
+            <h1 className="font-bebas text-5xl md:text-7xl tracking-widest text-white mb-2 flex items-center gap-2 md:gap-4">
+              PANDORA <span className="font-inter font-light text-2xl md:text-4xl text-gray-400">X</span> GLITCH <span className="text-primary">36</span>
             </h1>
             
             {/* Minimalist Progress Line */}
