@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { 
@@ -14,6 +14,117 @@ import { useToast } from '../../../components/ui/ToastContext';
 import { RoundService } from '@shared/services/RoundService';
 import { EvaluationService } from '@shared/services/EvaluationService';
 import type { Round, RoundStatus, CriterionTemplate } from '@shared/types/models';
+
+const parseTime = (timeStr?: string) => {
+  if (!timeStr) return { h: '12', m: '00', ampm: 'PM' };
+  const [h, m] = timeStr.split(':');
+  let hNum = parseInt(h || '12', 10);
+  const isPM = hNum >= 12;
+  const ampm = isPM ? 'PM' : 'AM';
+  if (hNum === 0) hNum = 12;
+  else if (hNum > 12) hNum -= 12;
+  
+  return { h: hNum.toString().padStart(2, '0'), m: m || '00', ampm };
+};
+
+const formatTime = (h: string, m: string, ampm: string) => {
+  let hNum = parseInt(h, 10);
+  if (ampm === 'PM' && hNum !== 12) hNum += 12;
+  else if (ampm === 'AM' && hNum === 12) hNum = 0;
+  return `${hNum.toString().padStart(2, '0')}:${m.padStart(2, '0')}`;
+};
+
+const DateTimePicker = ({ value, onChange }: { value?: string, onChange: (val: string | undefined) => void }) => {
+  const getLocalStr = (iso?: string) => {
+    if (!iso) return { date: '', time: '' };
+    const d = new Date(iso);
+    if (isNaN(d.getTime())) return { date: '', time: '' };
+    const offset = d.getTimezoneOffset() * 60000;
+    const local = new Date(d.getTime() - offset).toISOString().slice(0, 16);
+    const [date, time] = local.split('T');
+    return { date, time };
+  };
+
+  const current = getLocalStr(value);
+  const [date, setDate] = useState(current.date);
+  const [timeState, setTimeState] = useState(parseTime(current.time));
+
+  useEffect(() => {
+    const fresh = getLocalStr(value);
+    setDate(fresh.date);
+    setTimeState(parseTime(fresh.time));
+  }, [value]);
+
+  const handleUpdate = (newDate: string, newH: string, newM: string, newAmpm: string) => {
+    if (!newDate) {
+      onChange(undefined);
+      return;
+    }
+    const timeStr = formatTime(newH, newM, newAmpm);
+    const localDate = new Date(`${newDate}T${timeStr}`);
+    if (!isNaN(localDate.getTime())) {
+      onChange(localDate.toISOString());
+    }
+  };
+
+  return (
+    <div className="flex flex-col gap-2 w-full mt-1">
+      <Input
+        type="date"
+        className="h-9 text-sm cursor-pointer w-full"
+        value={date}
+        onChange={(e) => setDate(e.target.value)}
+        onBlur={(e) => handleUpdate(e.target.value, timeState.h, timeState.m, timeState.ampm)}
+        onClick={(e) => {
+          try {
+            (e.target as HTMLInputElement).showPicker();
+          } catch (err) {}
+        }}
+      />
+      <div className="flex gap-1 w-full overflow-hidden">
+        <select
+          className="h-9 text-xs sm:text-sm cursor-pointer flex-1 min-w-0 bg-black/50 border border-white/10 rounded-md px-0 sm:px-1 text-white focus:outline-none focus:border-primary text-center appearance-none"
+          value={timeState.h}
+          onChange={(e) => {
+            const newH = e.target.value;
+            setTimeState(s => ({ ...s, h: newH }));
+            handleUpdate(date, newH, timeState.m, timeState.ampm);
+          }}
+        >
+          {Array.from({length: 12}).map((_, i) => (
+            <option key={i+1} value={(i+1).toString().padStart(2, '0')}>{(i+1).toString().padStart(2, '0')}</option>
+          ))}
+        </select>
+        <span className="flex items-center text-gray-500 font-bold shrink-0">:</span>
+        <select
+          className="h-9 text-xs sm:text-sm cursor-pointer flex-1 min-w-0 bg-black/50 border border-white/10 rounded-md px-0 sm:px-1 text-white focus:outline-none focus:border-primary text-center appearance-none"
+          value={timeState.m}
+          onChange={(e) => {
+            const newM = e.target.value;
+            setTimeState(s => ({ ...s, m: newM }));
+            handleUpdate(date, timeState.h, newM, timeState.ampm);
+          }}
+        >
+          {Array.from({length: 60}).map((_, i) => (
+            <option key={i} value={i.toString().padStart(2, '0')}>{i.toString().padStart(2, '0')}</option>
+          ))}
+        </select>
+        <select
+          className="h-9 text-xs sm:text-sm cursor-pointer flex-1 min-w-0 bg-black/50 border border-white/10 rounded-md px-0 sm:px-1 text-white focus:outline-none focus:border-primary text-center sm:ml-1 appearance-none"
+          value={timeState.ampm}
+          onChange={(e) => {
+            const newAmpm = e.target.value;
+            setTimeState(s => ({ ...s, ampm: newAmpm }));
+            handleUpdate(date, timeState.h, timeState.m, newAmpm);
+          }}
+        >
+          <option value="AM">AM</option>
+          <option value="PM">PM</option>
+        </select>
+      </div>
+    </div>
+  );
+};
 
 export default function RoundDetails() {
   const { id } = useParams<{ id: string }>();
@@ -34,35 +145,28 @@ export default function RoundDetails() {
 
   useEffect(() => {
     if (id) {
-      loadRound(id);
+      setIsLoading(true);
+      const unsubRound = RoundService.subscribeToAllRounds((rounds) => {
+        const found = rounds.find(r => String(r.id) === String(id));
+        if (found) {
+          setRound(found);
+          setIsLoading(false);
+        } else {
+          error('Round not found');
+          navigate('/workspace/rounds');
+        }
+      });
       
       const unsub = EvaluationService.subscribeToCriteria(Number(id), (data) => {
         setCriteria(data);
       });
       
-
-      
-      return () => unsub();
+      return () => {
+        unsubRound();
+        unsub();
+      };
     }
-  }, [id]);
-
-  const loadRound = async (roundId: string) => {
-    try {
-      setIsLoading(true);
-      const rounds = await RoundService.getAllRounds();
-      const found = rounds.find(r => r.id === roundId || r.id === Number(roundId) as any);
-      if (found) {
-        setRound(found);
-      } else {
-        error('Round not found');
-        navigate('/workspace/rounds');
-      }
-    } catch (err) {
-      error('Failed to load round details');
-    } finally {
-      setIsLoading(false);
-    }
-  };
+  }, [id, navigate, error]);
 
   const handleUpdate = async (updates: Partial<Round>) => {
     if (!round) return;
@@ -267,7 +371,7 @@ export default function RoundDetails() {
                     <Input 
                       type="number" 
                       defaultValue={round.maxRevisions ?? 2} 
-                      onChange={(e) => handleUpdate({ maxRevisions: parseInt(e.target.value) || 0 })}
+                      onBlur={(e) => handleUpdate({ maxRevisions: parseInt(e.target.value) || 0 })}
                     />
                   </div>
                 </div>
@@ -464,17 +568,9 @@ export default function RoundDetails() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-black/40">
                     <div className="text-xs font-bebas text-primary tracking-wider mb-1">SUBMISSION OPENS</div>
-                    <Input 
-                      type="datetime-local" 
-                      className="h-8 text-sm cursor-pointer w-full min-w-0"
-                      style={{ paddingRight: '4px' }}
-                      defaultValue={round.submissionOpenAt ? new Date(round.submissionOpenAt).toISOString().slice(0, 16) : ''}
-                      onBlur={(e) => handleUpdate({ submissionOpenAt: e.target.value ? new Date(e.target.value).toISOString() : undefined })}
-                      onClick={(e) => {
-                        try {
-                          (e.target as HTMLInputElement).showPicker();
-                        } catch (err) {}
-                      }}
+                    <DateTimePicker 
+                      value={round.submissionOpenAt}
+                      onChange={(val) => handleUpdate({ submissionOpenAt: val })}
                     />
                   </div>
                 </div>
@@ -486,18 +582,22 @@ export default function RoundDetails() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-black/40">
                     <div className="text-xs font-bebas text-red-400 tracking-wider mb-1">DEADLINE</div>
-                    <Input 
-                      type="datetime-local" 
-                      className="h-8 text-sm cursor-pointer w-full min-w-0"
-                      style={{ paddingRight: '4px' }}
-                      defaultValue={round.submissionCloseAt ? new Date(round.submissionCloseAt).toISOString().slice(0, 16) : ''}
-                      onBlur={(e) => handleUpdate({ submissionCloseAt: e.target.value ? new Date(e.target.value).toISOString() : undefined })}
-                      onClick={(e) => {
-                        try {
-                          (e.target as HTMLInputElement).showPicker();
-                        } catch (err) {}
-                      }}
+                    <DateTimePicker 
+                      value={round.submissionCloseAt}
+                      onChange={(val) => handleUpdate({ submissionCloseAt: val })}
                     />
+                    
+                    <div className="flex items-center gap-2 mt-3 pt-3 border-t border-white/10">
+                      <Checkbox 
+                        key={round.showCountdown ? 'cd-true' : 'cd-false'}
+                        defaultChecked={round.showCountdown} 
+                        onChange={(e) => handleUpdate({ showCountdown: (e.target as HTMLInputElement).checked })}
+                      />
+                      <div>
+                        <Label className="mb-0 text-xs text-white">Show Countdown Timer</Label>
+                        <p className="text-[10px] text-gray-500">Display live countdown for participants.</p>
+                      </div>
+                    </div>
                   </div>
                 </div>
 
@@ -508,17 +608,9 @@ export default function RoundDetails() {
                   </div>
                   <div className="w-[calc(100%-4rem)] md:w-[calc(50%-2.5rem)] p-4 rounded-xl border border-white/5 bg-black/40">
                     <div className="text-xs font-bebas text-purple-400 tracking-wider mb-1">EVALUATION OPENS</div>
-                    <Input 
-                      type="datetime-local" 
-                      className="h-8 text-sm cursor-pointer w-full min-w-0"
-                      style={{ paddingRight: '4px' }}
-                      defaultValue={round.evaluationOpenAt ? new Date(round.evaluationOpenAt).toISOString().slice(0, 16) : ''}
-                      onBlur={(e) => handleUpdate({ evaluationOpenAt: e.target.value ? new Date(e.target.value).toISOString() : undefined })}
-                      onClick={(e) => {
-                        try {
-                          (e.target as HTMLInputElement).showPicker();
-                        } catch (err) {}
-                      }}
+                    <DateTimePicker 
+                      value={round.evaluationOpenAt}
+                      onChange={(val) => handleUpdate({ evaluationOpenAt: val })}
                     />
                   </div>
                 </div>

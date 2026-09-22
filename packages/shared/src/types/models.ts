@@ -506,6 +506,7 @@ export interface Round {
   showLeaderboard?: boolean;
   showScorecard?: boolean;
   showCriteria?: boolean;
+  showCountdown?: boolean;
   
   // Rules Config
   evaluationMode?: 'SUBMISSION' | 'LIVE' | 'BOTH';

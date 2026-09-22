@@ -5,6 +5,7 @@ export interface SearchableOption {
   value: string;
   label: string;
   subLabel?: string;
+  disabled?: boolean;
 }
 
 interface SearchableSelectProps {
@@ -73,11 +74,20 @@ export function SearchableSelect({ options, value, onChange, placeholder = 'Sele
                 <button
                   key={opt.value}
                   type="button"
-                  className={`w-full text-left px-2 py-2 mb-1 rounded text-sm hover:bg-primary/20 transition-colors flex items-center justify-between ${value === opt.value ? 'bg-primary/10 text-primary' : 'text-gray-300'}`}
+                  disabled={opt.disabled}
+                  className={`w-full text-left px-2 py-2 mb-1 rounded text-sm transition-colors flex items-center justify-between ${
+                    opt.disabled 
+                      ? 'opacity-50 cursor-not-allowed bg-black/20 text-gray-500' 
+                      : value === opt.value 
+                        ? 'bg-primary/10 text-primary' 
+                        : 'hover:bg-primary/20 text-gray-300'
+                  }`}
                   onClick={() => {
-                    onChange(opt.value);
-                    setIsOpen(false);
-                    setSearch('');
+                    if (!opt.disabled) {
+                      onChange(opt.value);
+                      setIsOpen(false);
+                      setSearch('');
+                    }
                   }}
                 >
                   <div className="flex flex-col truncate pr-2">

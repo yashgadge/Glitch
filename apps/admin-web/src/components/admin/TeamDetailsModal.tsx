@@ -56,12 +56,12 @@ export function TeamDetailsModal({ isOpen, onClose, team }: TeamDetailsModalProp
     if (isAddingMember && availableParticipants.length === 0) {
       setIsLoadingParticipants(true);
       ParticipantService.getAllParticipants().then(pts => {
-        // Filter out participants that are already in a team (or just this team)
-        setAvailableParticipants(pts.filter(p => !p.teamId));
+        // Show everyone except current team members
+        setAvailableParticipants(pts.filter(p => !team?.memberIds.includes(p.id)));
         setIsLoadingParticipants(false);
       });
     }
-  }, [isAddingMember]);
+  }, [isAddingMember, team?.memberIds]);
 
   useEffect(() => {
     if (!isOpen || !team) return;
@@ -315,7 +315,8 @@ export function TeamDetailsModal({ isOpen, onClose, team }: TeamDetailsModalProp
                       options={availableParticipants.map(p => ({
                         value: p.id,
                         label: p.name,
-                        subLabel: `${p.email} • ${p.glitchId || p.id}`
+                        subLabel: `${p.email} • ${p.glitchId || p.id}${p.teamId ? ' (Already in a team)' : ''}`,
+                        disabled: !!p.teamId
                       }))}
                     />
                   )}

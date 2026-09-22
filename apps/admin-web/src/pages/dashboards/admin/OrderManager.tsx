@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useMemo } from 'react';
-import { ShoppingCart, Download, Edit2, Search, Filter } from 'lucide-react';
+import { ShoppingCart, Download, Edit2, Search, Filter, Trash2 } from 'lucide-react';
 import { Card } from '../../../components/ui/Card';
 import { Button } from '../../../components/ui/Button';
 import { Input, Label } from '../../../components/ui/Form';
@@ -62,6 +62,16 @@ export default function OrderManager() {
       toastError('Update Failed', err.message);
     } finally {
       setIsProcessing(false);
+    }
+  };
+
+  const handleDeleteOrder = async (order: Order) => {
+    if (!window.confirm(`Are you sure you want to delete order ${order.id}?`)) return;
+    try {
+      await OrderService.deleteOrder(order.id);
+      success('Order Deleted', `Order ${order.id} has been deleted.`);
+    } catch (err: any) {
+      toastError('Delete Failed', err.message);
     }
   };
 
@@ -198,9 +208,14 @@ export default function OrderManager() {
       header: 'Actions',
       accessorKey: 'id',
       cell: (row) => (
-        <Button variant="ghost" size="sm" onClick={() => { setSelectedOrder(row); setIsModalOpen(true); }} className="text-blue-400">
-          <Edit2 className="w-4 h-4" />
-        </Button>
+        <div className="flex gap-2">
+          <Button variant="ghost" size="sm" onClick={() => { setSelectedOrder(row); setIsModalOpen(true); }} className="text-blue-400" title="Edit Order">
+            <Edit2 className="w-4 h-4" />
+          </Button>
+          <Button variant="ghost" size="sm" onClick={() => handleDeleteOrder(row)} className="text-red-500 hover:bg-red-500/10" title="Delete Order">
+            <Trash2 className="w-4 h-4" />
+          </Button>
+        </div>
       )
     }
   ];

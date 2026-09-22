@@ -16,6 +16,45 @@ import { Code2, Send, Lock, AlertTriangle, Clock } from 'lucide-react';
 import { ChangeRequestsPanel } from './ChangeRequestsPanel';
 import { ChangeRequestService } from '@shared/services/ChangeRequestService';
 
+const CountdownTimer = ({ targetDate }: { targetDate: Date }) => {
+  const [timeLeft, setTimeLeft] = useState<{ days: number, hours: number, minutes: number, seconds: number } | null>(null);
+
+  useEffect(() => {
+    const calculateTimeLeft = () => {
+      const difference = targetDate.getTime() - new Date().getTime();
+      if (difference > 0) {
+        setTimeLeft({
+          days: Math.floor(difference / (1000 * 60 * 60 * 24)),
+          hours: Math.floor((difference / (1000 * 60 * 60)) % 24),
+          minutes: Math.floor((difference / 1000 / 60) % 60),
+          seconds: Math.floor((difference / 1000) % 60),
+        });
+      } else {
+        setTimeLeft(null);
+      }
+    };
+
+    calculateTimeLeft();
+    const timer = setInterval(calculateTimeLeft, 1000);
+    return () => clearInterval(timer);
+  }, [targetDate]);
+
+  if (!timeLeft) return null;
+
+  return (
+    <div className="flex justify-between gap-2 mt-4 mb-2">
+      {Object.entries(timeLeft).map(([unit, value]) => (
+        <div key={unit} className="flex flex-col items-center w-full">
+          <div className="bg-black/60 border border-primary/30 text-primary font-bebas text-4xl w-full h-16 flex items-center justify-center rounded-xl shadow-lg shadow-primary/10">
+            {value.toString().padStart(2, '0')}
+          </div>
+          <span className="text-[10px] text-gray-400 font-inter uppercase tracking-wider mt-1">{unit}</span>
+        </div>
+      ))}
+    </div>
+  );
+};
+
 export default function ParticipantSubmission() {
   const { user } = useAuth();
   const { success, error } = useToast();
@@ -28,12 +67,14 @@ export default function ParticipantSubmission() {
   const [submission, setSubmission] = useState<Submission | null>(null);
   const [loading, setLoading] = useState(true);
   const [configLoaded, setConfigLoaded] = useState(false);
+  const [availableRounds, setAvailableRounds] = useState<Round[]>([]);
 
   const [formData, setFormData] = useState<Record<string, any>>({});
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [revisionExplanations, setRevisionExplanations] = useState<any[]>([]);
   
   const saveTimeoutRef = useRef<NodeJS.Timeout | null>(null);
+  const activeRoundIdRef = useRef<number | null>(null);
 
   useEffect(() => {
     if (!user) return;
@@ -52,29 +93,39 @@ export default function ParticipantSubmission() {
   const [activeRoundId, setActiveRoundId] = useState<number | null>(null);
 
   useEffect(() => {
-    const fetchRounds = async () => {
-      const allRounds = await RoundService.getAllRounds();
+    activeRoundIdRef.current = activeRoundId;
+  }, [activeRoundId]);
+
+  useEffect(() => {
+    const unsub = RoundService.subscribeToAllRounds((allRounds) => {
       const sortedRounds = allRounds.sort((a, b) => a.order - b.order);
+      const validRounds = sortedRounds.filter(r => r.evaluationMode !== 'LIVE');
       
-      if (sortedRounds.length > 0) {
-        const validRounds = sortedRounds.filter(r => r.evaluationMode !== 'LIVE');
-        if (validRounds.length > 0) {
-          const active = validRounds.find(r => r.status === 'SUBMISSION_OPEN' || r.status === 'SCHEDULED' || r.status === 'EVALUATION_OPEN');
-          const resolvedId = active ? Number(active.id) : Number(validRounds[0].id);
-          setActiveRoundId(resolvedId);
-          setRound(active || validRounds[0]);
-        } else {
-          setActiveRoundId(null);
-          setRound(null);
-          setLoading(false);
-        }
-      } else {
+      setAvailableRounds(validRounds);
+      
+      if (validRounds.length === 0) {
         setActiveRoundId(null);
         setRound(null);
         setLoading(false);
+        return;
       }
-    };
-    fetchRounds();
+
+      const active = validRounds.find(r => r.status === 'SUBMISSION_OPEN' || r.status === 'SCHEDULED' || r.status === 'EVALUATION_OPEN');
+      let currentId = activeRoundIdRef.current;
+      
+      if (!currentId || !validRounds.find(r => Number(r.id) === currentId)) {
+        currentId = active ? Number(active.id) : Number(validRounds[0].id);
+        setActiveRoundId(currentId);
+      }
+      
+      const updatedRound = validRounds.find(r => Number(r.id) === currentId) || null;
+      setRound(updatedRound);
+      
+      // If we are just updating the round status but no active round changed, loading might still need to be handled
+      // but it's handled by the team/profile effects mostly. We can set it false if no team.
+    });
+
+    return () => unsub();
   }, []);
 
   useEffect(() => {
@@ -149,18 +200,55 @@ export default function ParticipantSubmission() {
     }
   };
 
-  const now = new Date();
+  const [now, setNow] = useState(new Date());
+
+  useEffect(() => {
+    const timer = setInterval(() => setNow(new Date()), 1000);
+    return () => clearInterval(timer);
+  }, []);
+
   const deadline = round?.submissionCloseAt ? new Date(round.submissionCloseAt) : null;
   const isPastDeadline = deadline ? now > deadline : false;
+
+  const activeConfig = {
+    enabled: true,
+    maxRevisions: 2,
+    allowDraftEditing: true,
+    allowEditingAfterSubmission: false,
+    autoLockAfterDeadline: true,
+    allowLateSubmission: false,
+    presentationRequired: true,
+    ...(roundConfig || {}),
+    maxRevisions: round?.maxRevisions ?? roundConfig?.maxRevisions ?? 2,
+    allowLateSubmission: round?.allowLateSubmission ?? roundConfig?.allowLateSubmission ?? false,
+  };
   
+  const isCompleted = ['submitted', 'late', 'revision_submitted', 'under_review', 'evaluated'].includes(submission?.status || '');
+
   const isLocked = (() => {
-    if (!roundConfig?.enabled) return true;
-    if (roundConfig?.allowDraftEditing === false && (!submission || submission.status === 'draft')) return true;
+    if (round?.status !== 'SUBMISSION_OPEN') return true;
+    if (activeConfig.enabled === false) return true;
+    if (activeConfig.allowDraftEditing === false && (!submission || submission.status === 'draft')) return true;
     if (submission?.status === 'locked') return true;
-    if (submission?.status === 'submitted' && roundConfig?.allowEditingAfterSubmission === false) return true;
-    if (isPastDeadline && roundConfig?.autoLockAfterDeadline) return true;
     if (team?.eliminated || team?.disqualified) return true;
-    if (isPastDeadline && !roundConfig?.allowLateSubmission && (!submission || submission.status === 'draft')) return true;
+    
+    if (isCompleted && activeConfig.allowEditingAfterSubmission !== true) {
+      if (activeConfig.maxRevisions <= (submission?.currentVersion || 1)) {
+        return true;
+      }
+    }
+    
+    if (isPastDeadline) {
+      if (activeConfig.allowLateSubmission === true) {
+        return false;
+      } else {
+        if (!isCompleted) return true;
+        if (activeConfig.autoLockAfterDeadline !== false) {
+           return true;
+        }
+      }
+    }
+    
     return false;
   })();
 
@@ -215,7 +303,7 @@ export default function ParticipantSubmission() {
       let isLate = false;
       
       if (deadline && submitTime > deadline) {
-        if (roundConfig?.allowLateSubmission) {
+        if (activeConfig.allowLateSubmission) {
           isLate = true;
         } else {
           error('Submission deadline has passed.');
@@ -240,6 +328,14 @@ export default function ParticipantSubmission() {
     } finally {
       setIsSubmitting(false);
     }
+  };
+
+  const handleRoundChange = (roundId: number) => {
+    setActiveRoundId(roundId);
+    setRound(availableRounds.find(r => Number(r.id) === roundId) || null);
+    setFormData({});
+    setSubmission(null);
+    setLoading(true);
   };
 
   if (loading) return null;
@@ -281,11 +377,28 @@ export default function ParticipantSubmission() {
 
   return (
     <div className="max-w-4xl mx-auto space-y-6">
-      <div>
-        <h2 className="font-bebas text-4xl tracking-widest text-white flex items-center gap-3">
-          <Code2 className="w-8 h-8 text-primary" /> PROJECT SUBMISSION
-        </h2>
-        <p className="font-inter text-gray-400">Submit your project details for Round {activeRoundId || '1'}.</p>
+      <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4">
+        <div>
+          <h2 className="font-bebas text-4xl tracking-widest text-white flex items-center gap-3">
+            <Code2 className="w-8 h-8 text-primary" /> PROJECT SUBMISSION
+          </h2>
+          <p className="font-inter text-gray-400">Submit your project details for Round {activeRoundId || '1'}.</p>
+        </div>
+        
+        {availableRounds.length > 1 && (
+          <div className="flex items-center gap-3 bg-black/40 p-2.5 rounded-xl border border-white/10 shrink-0">
+            <Label className="text-gray-400 whitespace-nowrap mb-0 text-xs uppercase tracking-wider">Select Round:</Label>
+            <select
+              value={activeRoundId || ''}
+              onChange={(e) => handleRoundChange(Number(e.target.value))}
+              className="bg-black/50 border border-white/10 rounded-lg px-3 py-1.5 text-white font-bebas tracking-wide focus:outline-none focus:border-primary text-lg"
+            >
+              {availableRounds.map(r => (
+                <option key={r.id} value={r.id}>Round {r.id}: {r.name}</option>
+              ))}
+            </select>
+          </div>
+        )}
       </div>
 
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mb-6">
@@ -301,10 +414,20 @@ export default function ParticipantSubmission() {
                 )}
               </div>
             </div>
-            {submission?.status === 'submitted' && <Badge variant="success">SUBMITTED</Badge>}
-            {submission?.status === 'late' && <Badge variant="warning">LATE SUBMISSION</Badge>}
-            {submission?.status === 'draft' && <Badge variant="outline">DRAFT</Badge>}
-            {submission?.status === 'locked' && <Badge variant="danger">LOCKED</Badge>}
+            <div className="flex flex-col items-end gap-2">
+              {(!submission || submission?.status === 'not_started' || submission?.status === 'draft') && (
+                 <Badge variant={isPastDeadline ? "danger" : "outline"}>
+                   {isPastDeadline ? "NOT SUBMITTED" : "DRAFT (UNSUBMITTED)"}
+                 </Badge>
+              )}
+              {['submitted', 'revision_submitted'].includes(submission?.status || '') && <Badge variant="success">SUBMITTED</Badge>}
+              {submission?.status === 'late' && <Badge variant="warning">LATE SUBMISSION</Badge>}
+              {submission?.status === 'revision_requested' && <Badge variant="warning">REVISION REQUESTED</Badge>}
+              {submission?.status === 'under_review' && <Badge variant="primary">UNDER REVIEW</Badge>}
+              {submission?.status === 'evaluated' && <Badge variant="success">EVALUATED</Badge>}
+              {isLocked && !isCompleted && submission?.status !== 'locked' && <Badge variant="danger">LOCKED</Badge>}
+              {submission?.status === 'locked' && <Badge variant="danger">LOCKED</Badge>}
+            </div>
           </div>
 
           <div className="space-y-6">
@@ -377,17 +500,20 @@ export default function ParticipantSubmission() {
               {round?.submissionCloseAt && (
                 <div className="pb-4 border-b border-white/10">
                   <span className="text-gray-400 font-inter text-sm block mb-1">Deadline</span>
-                  <div className="flex items-center gap-2 text-white font-mono">
+                  <div className="flex items-center gap-2 text-white font-mono mb-2">
                     <Clock className={`w-4 h-4 ${isPastDeadline ? 'text-red-400' : 'text-primary'}`} />
                     <span className={isPastDeadline ? 'text-red-400' : ''}>
                       {new Date(round.submissionCloseAt).toLocaleString()}
                     </span>
                   </div>
+                  {round.showCountdown && !isPastDeadline && round.status === 'SUBMISSION_OPEN' && (
+                    <CountdownTimer targetDate={new Date(round.submissionCloseAt)} />
+                  )}
                 </div>
               )}
               <div className="flex justify-between items-center text-sm">
                 <span className="text-gray-400 font-inter">Window</span>
-                {roundConfig?.enabled ? (
+                {round?.status === 'SUBMISSION_OPEN' && roundConfig?.enabled ? (
                   <span className="text-green-400 font-mono">OPEN</span>
                 ) : (
                   <span className="text-red-400 font-mono">CLOSED</span>
@@ -401,7 +527,13 @@ export default function ParticipantSubmission() {
                   <span className="text-red-400 font-mono">LOCKED</span>
                 )}
               </div>
-              {roundConfig?.allowLateSubmission && (
+              <div className="flex justify-between items-center text-sm">
+                <span className="text-gray-400 font-inter">Attempts Used</span>
+                <span className="text-white font-mono">
+                  {isCompleted ? submission?.currentVersion || 1 : 0} / {activeConfig.maxRevisions}
+                </span>
+              </div>
+              {activeConfig.allowLateSubmission && (
                 <div className="flex justify-between items-center text-sm">
                   <span className="text-gray-400 font-inter">Late Submissions</span>
                   <span className="text-yellow-400 font-mono">ALLOWED</span>
@@ -419,7 +551,7 @@ export default function ParticipantSubmission() {
                 disabled={isSubmitting}
               >
                 <Send className="w-4 h-4 mr-2" />
-                {isSubmitting ? 'SUBMITTING...' : 'SUBMIT FINAL'}
+                {isSubmitting ? 'SUBMITTING...' : isCompleted ? `SUBMIT REVISION (${(submission?.currentVersion || 1) + 1} OF ${activeConfig.maxRevisions})` : `SUBMIT FINAL (ATTEMPT 1 OF ${activeConfig.maxRevisions})`}
               </Button>
               <p className="text-center text-xs text-gray-500 font-inter mt-2">
                 Drafts are saved automatically as you type.
@@ -440,13 +572,15 @@ export default function ParticipantSubmission() {
           )}
           
           {isLocked && (
-            <Card className="p-4 bg-red-500/10 border-red-500/30 flex items-start gap-3">
+            <Card className="p-4 bg-red-500/10 border-red-500/30 flex items-start gap-3 mt-4">
               <Lock className="w-5 h-5 text-red-400 mt-0.5 shrink-0" />
               <div>
                 <h4 className="font-bebas text-red-400">SUBMISSION LOCKED</h4>
                 <p className="text-xs text-red-300/80 font-inter mt-1">
                   {team?.disqualified ? 'Your team has been disqualified.' : 
                    team?.eliminated ? `Your team was eliminated. Reason: ${team.eliminationReason || 'N/A'}` : 
+                   isPastDeadline && (!submission || submission.status === 'draft' || submission.status === 'not_started') ? 
+                   'The deadline has passed and your draft was NOT submitted. It will not be evaluated.' :
                    'You cannot edit your submission at this time.'}
                 </p>
               </div>

@@ -259,7 +259,8 @@ export default function SubmissionSettings() {
                     type="number" 
                     className="w-[180px]" 
                     value={roundConfig?.maxRevisions || 1}
-                    onChange={(e) => handleUpdateConfig({ maxRevisions: parseInt(e.target.value) })}
+                    min="1"
+                    onChange={(e) => handleUpdateConfig({ maxRevisions: parseInt(e.target.value, 10) || 1 })}
                   />
                 </div>
                 <div className="flex justify-end pt-2">
