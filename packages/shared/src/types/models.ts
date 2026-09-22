@@ -91,6 +91,7 @@ export interface Team {
   score?: number;
   isWinner?: boolean;
   isFinalist?: boolean;
+  foodIncluded?: boolean;
   lastStatusUpdate?: string;
   createdAt: string;
   updatedAt: string;

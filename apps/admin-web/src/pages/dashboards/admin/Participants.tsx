@@ -8,6 +8,7 @@ import { usePermissions } from '@shared/lib/permissions';
 import { useAuth } from '@shared/contexts/AuthContext';
 import { useToast } from '../../../components/ui/ToastContext';
 import { ParticipantService } from '@shared/services/ParticipantService';
+import { TeamService } from '@shared/services/TeamService';
 import QuickEditModal from '../../../components/admin/QuickEditModal';
 import { useNavigate } from 'react-router-dom';
 import { Modal } from '../../../components/ui/Modal';
@@ -33,6 +34,7 @@ export default function Participants() {
   const [statusFilter, setStatusFilter] = useState<string>('all');
 
   const [staffIds, setStaffIds] = useState<Set<string>>(new Set());
+  const [teamsMap, setTeamsMap] = useState<Record<string, string>>({});
 
   useEffect(() => {
     // Note: To truly scale to 5000+ we should implement pagination or limits at the query level,
@@ -46,9 +48,16 @@ export default function Participants() {
       setStaffIds(new Set(staff.map(s => s.id)));
     });
 
+    const unsubTeams = TeamService.subscribeToAllTeams((teams) => {
+      const map: Record<string, string> = {};
+      teams.forEach(t => { map[t.id] = t.name; });
+      setTeamsMap(map);
+    });
+
     return () => {
       unsub();
       if (unsubStaff) unsubStaff();
+      if (unsubTeams) unsubTeams();
     };
   }, []);
 
@@ -223,10 +232,25 @@ export default function Participants() {
       sortable: true,
       cell: (row) => row.teamId ? (
         <div className="flex flex-col">
-          <Badge variant="outline">Team Assigned</Badge>
+          <Badge variant="outline" className="text-xs truncate max-w-[150px]">{teamsMap[row.teamId] || 'Unknown Team'}</Badge>
           <span className="text-xs text-gray-500 font-mono mt-1">{row.teamId}</span>
         </div>
       ) : <span className="text-gray-500 text-xs">No Team</span>
+    },
+    {
+      header: 'Registered',
+      accessorKey: 'createdAt',
+      sortable: true,
+      cell: (row) => {
+        if (!row.createdAt) return <span className="text-gray-500 text-xs">Unknown</span>;
+        const date = new Date(row.createdAt);
+        return (
+          <div className="flex flex-col">
+            <span className="text-sm text-gray-300">{date.toLocaleDateString()}</span>
+            <span className="text-xs text-gray-500">{date.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' })}</span>
+          </div>
+        );
+      }
     },
     {
       header: 'Status',

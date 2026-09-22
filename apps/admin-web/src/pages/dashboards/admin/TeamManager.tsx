@@ -218,11 +218,18 @@ export default function TeamManager() {
         return (
           <div className="flex flex-col gap-1 items-start">
             {statusBadge}
-            {row.paymentStatus?.toUpperCase() === 'PAID' ? (
-              <Badge variant="success" className="bg-green-500/10 text-green-400 border-green-500/50 text-[10px] px-1.5 py-0">PAID</Badge>
-            ) : (
-              <Badge variant="warning" className="text-[10px] px-1.5 py-0">PAYMENT PENDING</Badge>
-            )}
+            <div className="flex gap-2 items-center mt-1">
+              {row.paymentStatus?.toUpperCase() === 'PAID' ? (
+                <>
+                  <Badge variant="success" className="bg-green-500/10 text-green-400 border-green-500/50 text-[10px] px-1.5 py-0">PAID</Badge>
+                  {(row.foodIncluded ?? true) && (
+                    <Badge variant="outline" className="bg-orange-500/10 text-orange-400 border-orange-500/50 text-[10px] px-1.5 py-0">🍔 FOOD</Badge>
+                  )}
+                </>
+              ) : (
+                <Badge variant="warning" className="text-[10px] px-1.5 py-0">PAYMENT PENDING</Badge>
+              )}
+            </div>
           </div>
         );
       }
