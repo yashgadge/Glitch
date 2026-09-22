@@ -177,6 +177,8 @@ export default function TeamManager() {
     { 
       header: 'Track & Problem', 
       accessorKey: 'track',
+      sortable: true,
+      sortValue: (row) => row.track || 'Z', // Sort tracks alphabetically, push empty to bottom
       cell: (row) => (
         <div className="flex flex-col gap-1">
           <div className="flex items-center gap-2">
@@ -208,6 +210,7 @@ export default function TeamManager() {
       header: 'Status',
       accessorKey: 'status',
       sortable: true,
+      sortValue: (row) => `${row.paymentStatus || ''}_${row.status}`,
       cell: (row) => {
         let statusBadge;
         if (row.eliminated) statusBadge = <Badge variant="danger">Eliminated</Badge>;
@@ -237,7 +240,9 @@ export default function TeamManager() {
     {
       header: 'Members',
       accessorKey: 'memberIds',
-      cell: (row) => <span className="text-gray-400">{row.memberIds.length} / 4</span>
+      sortable: true,
+      sortValue: (row) => row.memberIds?.length || 0,
+      cell: (row) => <span className="text-gray-400">{row.memberIds?.length || 0} / 4</span>
     },
     {
       header: 'Actions',

@@ -7,6 +7,7 @@ export interface Column<T> {
   accessorKey: keyof T | string;
   cell?: (row: T) => React.ReactNode;
   sortable?: boolean;
+  sortValue?: (row: T) => any;
 }
 
 interface DataTableProps<T> {
@@ -61,14 +62,21 @@ export function DataTable<T>({
   // Sorting
   const sortedData = React.useMemo(() => {
     if (!sortConfig) return filteredData;
+    const col = columns.find(c => c.accessorKey === sortConfig.key);
+    
     return [...filteredData].sort((a, b) => {
-      const aVal = (a as any)[sortConfig.key];
-      const bVal = (b as any)[sortConfig.key];
+      let aVal = col?.sortValue ? col.sortValue(a) : (a as any)[sortConfig.key];
+      let bVal = col?.sortValue ? col.sortValue(b) : (b as any)[sortConfig.key];
+      
+      // Handle null/undefined gracefully for reliable sorting
+      if (aVal == null) aVal = '';
+      if (bVal == null) bVal = '';
+
       if (aVal < bVal) return sortConfig.direction === 'asc' ? -1 : 1;
       if (aVal > bVal) return sortConfig.direction === 'asc' ? 1 : -1;
       return 0;
     });
-  }, [filteredData, sortConfig]);
+  }, [filteredData, sortConfig, columns]);
 
   // Pagination
   const totalPages = Math.ceil(sortedData.length / internalPageSize) || 1;
