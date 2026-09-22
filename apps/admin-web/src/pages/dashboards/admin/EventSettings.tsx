@@ -411,7 +411,36 @@ export default function EventSettings() {
             <Clock className="w-5 h-5 text-gray-400" />
             <h3 className="text-lg font-medium text-white font-inter">Event Timeline</h3>
           </div>
-          <Button variant="primary" size="sm" leftIcon={Plus} onClick={openNewTimelineModal}>Add Event</Button>
+          <div className="flex items-center gap-3">
+            <Button 
+              variant="outline" 
+              size="sm"
+              onClick={() => {
+                if (!confirm('This will overwrite all existing events. Are you sure?')) return;
+                const defaultEvents: EventTimelineItem[] = [
+                  { id: '1', time: '2026-01-01T08:00', day: 1, title: 'Registration & Check-In', description: 'Get your swag bags, ID badges, and find your designated hacking stations.' },
+                  { id: '2', time: '2026-01-01T09:00', day: 1, title: 'Opening Ceremony', description: 'Keynote speakers, track announcements, and the official start countdown.' },
+                  { id: '3', time: '2026-01-01T10:00', day: 1, title: 'Problem Statement Release', description: 'The official problem statements are revealed to all participants.' },
+                  { id: '4', time: '2026-01-01T10:30', day: 1, title: 'Hackathon Begins 🚀', description: '36 hours on the clock. Start building.' },
+                  { id: '5', time: '2026-01-01T15:00', day: 1, title: 'Mentorship Session', description: 'Industry experts will circulate to provide feedback on initial architecture.' },
+                  { id: '6', time: '2026-01-01T19:00', day: 1, title: 'Dinner Break 🍽️', description: 'Fuel up for the night shift.' },
+                  { id: '7', time: '2026-01-01T21:00', day: 1, title: 'Progress Checkpoint', description: 'Quick check-in on your team\'s progress.' },
+                  { id: '8', time: '2026-01-01T23:00', day: 1, title: 'Fun & Networking Session 🎉', description: 'Take a break, play some games, and network with other hackers.' },
+                  { id: '9', time: '2026-01-01T08:00', day: 2, title: 'Breakfast & Refresh', description: 'Morning fuel to push through the final stretch.' },
+                  { id: '10', time: '2026-01-01T11:00', day: 2, title: 'Final Checkpoint', description: 'Last mentor feedback before submissions.' },
+                  { id: '11', time: '2026-01-01T13:00', day: 2, title: 'Final Submission 📥', description: 'Keyboards down. Code freeze and project submissions.' },
+                  { id: '12', time: '2026-01-01T14:00', day: 2, title: 'Project Evaluation ⚖️', description: 'Present your solutions to the judges.' },
+                  { id: '13', time: '2026-01-01T17:30', day: 2, title: 'Results & Prize Distribution 🏆', description: 'Winners announced and prizes distributed.' },
+                  { id: '14', time: '2026-01-01T20:30', day: 2, title: 'Closing Ceremony 🎊', description: 'Official closing of the hackathon.' },
+                ];
+                setTimeline(defaultEvents);
+                toastError('Timeline Loaded', 'Click Save Configuration to confirm.');
+              }}
+            >
+              Reset to Defaults
+            </Button>
+            <Button variant="primary" size="sm" leftIcon={Plus} onClick={openNewTimelineModal}>Add Event</Button>
+          </div>
         </div>
         
         <div className="space-y-4">
@@ -448,33 +477,7 @@ export default function EventSettings() {
             })
           ) : (
             <div className="p-8 text-center text-gray-500 font-inter border border-dashed border-white/10 rounded-xl flex flex-col items-center gap-4">
-              <p>No timeline events configured. Click "Add Event" to create your schedule.</p>
-              <Button 
-                variant="outline" 
-                size="sm" 
-                onClick={() => {
-                  const defaultEvents: EventTimelineItem[] = [
-                    { id: '1', time: '2026-01-01T08:00', day: 1, title: 'Registration & Check-In', description: 'Get your swag bags, ID badges, and find your designated hacking stations.' },
-                    { id: '2', time: '2026-01-01T09:00', day: 1, title: 'Opening Ceremony', description: 'Keynote speakers, track announcements, and the official start countdown.' },
-                    { id: '3', time: '2026-01-01T10:00', day: 1, title: 'Problem Statement Release', description: 'The official problem statements are revealed to all participants.' },
-                    { id: '4', time: '2026-01-01T10:30', day: 1, title: 'Hackathon Begins 🚀', description: '36 hours on the clock. Start building.' },
-                    { id: '5', time: '2026-01-01T15:00', day: 1, title: 'Mentorship Session', description: 'Industry experts will circulate to provide feedback on initial architecture.' },
-                    { id: '6', time: '2026-01-01T19:00', day: 1, title: 'Dinner Break 🍽️', description: 'Fuel up for the night shift.' },
-                    { id: '7', time: '2026-01-01T21:00', day: 1, title: 'Progress Checkpoint', description: 'Quick check-in on your team\'s progress.' },
-                    { id: '8', time: '2026-01-01T23:00', day: 1, title: 'Fun & Networking Session 🎉', description: 'Take a break, play some games, and network with other hackers.' },
-                    { id: '9', time: '2026-01-01T08:00', day: 2, title: 'Breakfast & Refresh', description: 'Morning fuel to push through the final stretch.' },
-                    { id: '10', time: '2026-01-01T11:00', day: 2, title: 'Final Checkpoint', description: 'Last mentor feedback before submissions.' },
-                    { id: '11', time: '2026-01-01T13:00', day: 2, title: 'Final Submission 📥', description: 'Keyboards down. Code freeze and project submissions.' },
-                    { id: '12', time: '2026-01-01T14:00', day: 2, title: 'Project Evaluation ⚖️', description: 'Present your solutions to the judges.' },
-                    { id: '13', time: '2026-01-01T17:30', day: 2, title: 'Results & Prize Distribution 🏆', description: 'Winners announced and prizes distributed.' },
-                    { id: '14', time: '2026-01-01T20:30', day: 2, title: 'Closing Ceremony 🎊', description: 'Official closing of the hackathon.' },
-                  ];
-                  setTimeline(defaultEvents);
-                  toastError('Timeline Loaded', 'Click Save Timeline Changes to confirm.');
-                }}
-              >
-                Load Default Timeline Data
-              </Button>
+              <p>No timeline events configured. Click "Add Event" or "Reset to Defaults" to create your schedule.</p>
             </div>
           )}
         </div>
@@ -615,6 +618,34 @@ export default function EventSettings() {
               <div className="col-span-2">
                 <Label>Description (Optional)</Label>
                 <Input value={editingItem.description || ''} onChange={e => setEditingItem({...editingItem, description: e.target.value})} placeholder="Brief description of the item" />
+              </div>
+
+              <div>
+                <Label>Total Inventory (Optional)</Label>
+                <Input 
+                  type="number" 
+                  min="0" 
+                  value={editingItem.inventory === null || editingItem.inventory === undefined ? '' : editingItem.inventory} 
+                  onChange={e => setEditingItem({
+                    ...editingItem, 
+                    inventory: e.target.value ? Number(e.target.value) : undefined
+                  })} 
+                  placeholder="Leave empty for unlimited"
+                />
+              </div>
+
+              <div>
+                <Label>Max per Participant</Label>
+                <Input 
+                  type="number" 
+                  min="1" 
+                  value={editingItem.maxQuantityPerParticipant === null || editingItem.maxQuantityPerParticipant === undefined ? '' : editingItem.maxQuantityPerParticipant} 
+                  onChange={e => setEditingItem({
+                    ...editingItem, 
+                    maxQuantityPerParticipant: e.target.value ? Number(e.target.value) : undefined
+                  })} 
+                  placeholder="Leave empty for unlimited"
+                />
               </div>
 
               <div className="col-span-2 space-y-4">
