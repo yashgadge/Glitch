@@ -1,0 +1,11 @@
+Feature Category,Feature Name,Live Status,Local Status,Classification
+Authentication,Login / Register,Verified,Verified,Present and visually verified
+Public Content,Event Details & Rules,Verified,Verified,Present and visually verified
+Dashboard,Participant Home,Redirected,Redirected,Restricted by authentication
+Dashboard,Admin Workspace,Redirected,Redirected,Restricted by authentication
+Registration,Team Creation & Joining,Unverified,Unverified,Present but interaction unverified
+Content,Announcements,Unverified,Unverified,Present but interaction unverified
+Submissions,Project Submissions,Unverified,Unverified,Present but interaction unverified
+Evaluations,Judging Interface,Unverified,Unverified,Present but interaction unverified
+Settings,Event Toggles,Unverified,Unverified,Present but interaction unverified
+Certificates,Bulk Issue,Unverified,Unverified,Present but interaction unverified

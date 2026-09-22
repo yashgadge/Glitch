@@ -1,0 +1,8 @@
+Admin Feature,Participant Affected Feature,Dependency Type,Description,Status
+Event Settings > Registration Open,Participant Registration,Gatekeeper,Controls whether users can create new accounts,Confirmed
+Event Settings > Teams Locked,Participant Team Management,Gatekeeper,Prevents users from leaving or creating teams after a deadline,Confirmed
+Event Settings > Show Food Notice,Participant Dashboard Home,UI Element,Displays the food/meal preference alert to users,Confirmed
+Tracks Manager,Participant Profile/Team,Data Source,Populates the available tracks dropdown for users,Confirmed
+Rounds Manager,Participant Submissions,Gatekeeper,Controls whether submissions are open or closed based on active round,Confirmed
+Certificates Manager,Participant Certificates,Data Source,Defines the template and metadata for generated certificates,Unverified
+Announcements CMS,Participant Announcements,Data Source,Populates the dashboard announcements feed,Unverified

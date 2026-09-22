@@ -1,0 +1,150 @@
+[
+  {
+    "site": "live_participant",
+    "route": "/register",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "warning",
+        "text": "Unrecognized feature: 'web-share'."
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "live_participant",
+    "route": "/register",
+    "viewport": "mobile",
+    "console": [
+      {
+        "type": "warning",
+        "text": "Unrecognized feature: 'web-share'."
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_participant",
+    "route": "/",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "warning",
+        "text": "[Agentation] Failed to initialize session, using local storage: TypeError: Failed to fetch\n    at createSession (http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:11758:25)\n    at initSession (http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:13574:28)\n    at http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:13619:3\n    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:14178:13)\n    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:944:66)\n    at commitHookEffectListMount (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:6901:153)\n    at commitHookPassiveMountEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:6936:55)\n    at commitPassiveMountOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8313:22)\n    at recursivelyTraversePassiveMountEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8300:313)\n    at commitPassiveMountOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8361:772)"
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_participant",
+    "route": "/competition-rules",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "warning",
+        "text": "[Agentation] Failed to initialize session, using local storage: TypeError: Failed to fetch\n    at createSession (http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:11758:25)\n    at initSession (http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:13574:28)\n    at http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:13619:3\n    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:14178:13)\n    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:944:66)\n    at commitHookEffectListMount (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:6901:153)\n    at commitHookPassiveMountEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:6936:55)\n    at commitPassiveMountOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8313:22)\n    at recursivelyTraversePassiveMountEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8300:313)\n    at commitPassiveMountOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8361:772)"
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_participant",
+    "route": "/refund-policy",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "fatal",
+        "text": "page.goto: Timeout 10000ms exceeded.\nCall log:\n\u001b[2m  - navigating to \"http://localhost:3000/refund-policy\", waiting until \"domcontentloaded\"\u001b[22m\n"
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_participant",
+    "route": "/register",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "warning",
+        "text": "Unrecognized feature: 'web-share'."
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_participant",
+    "route": "/dashboard",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "warning",
+        "text": "[Agentation] Failed to initialize session, using local storage: TypeError: Failed to fetch\n    at createSession (http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:11758:25)\n    at initSession (http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:13574:28)\n    at http://localhost:3000/node_modules/.vite/deps/agentation.js?v=1366e9a3:13619:3\n    at Object.react_stack_bottom_frame (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:14178:13)\n    at runWithFiberInDEV (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:944:66)\n    at commitHookEffectListMount (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:6901:153)\n    at commitHookPassiveMountEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:6936:55)\n    at commitPassiveMountOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8313:22)\n    at recursivelyTraversePassiveMountEffects (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8300:313)\n    at commitPassiveMountOnFiber (http://localhost:3000/node_modules/.vite/deps/react-dom_client.js?v=1366e9a3:8361:772)"
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_admin",
+    "route": "/login",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "warning",
+        "text": "[Agentation] Failed to initialize session, using local storage: TypeError: Failed to fetch\n    at createSession (http://localhost:3001/node_modules/.vite/deps/agentation.js?v=27dc156e:11758:25)\n    at initSession (http://localhost:3001/node_modules/.vite/deps/agentation.js?v=27dc156e:13574:28)\n    at http://localhost:3001/node_modules/.vite/deps/agentation.js?v=27dc156e:13619:3\n    at Object.react_stack_bottom_frame (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:14178:13)\n    at runWithFiberInDEV (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:944:66)\n    at commitHookEffectListMount (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:6901:153)\n    at commitHookPassiveMountEffects (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:6936:55)\n    at commitPassiveMountOnFiber (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:8313:22)\n    at recursivelyTraversePassiveMountEffects (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:8300:313)\n    at commitPassiveMountOnFiber (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:8361:772)"
+      }
+    ],
+    "network": []
+  },
+  {
+    "site": "local_admin",
+    "route": "/forgot-password",
+    "viewport": "desktop",
+    "console": [
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "error",
+        "text": "Failed to load resource: net::ERR_CONNECTION_REFUSED"
+      },
+      {
+        "type": "warning",
+        "text": "[Agentation] Failed to initialize session, using local storage: TypeError: Failed to fetch\n    at createSession (http://localhost:3001/node_modules/.vite/deps/agentation.js?v=27dc156e:11758:25)\n    at initSession (http://localhost:3001/node_modules/.vite/deps/agentation.js?v=27dc156e:13574:28)\n    at http://localhost:3001/node_modules/.vite/deps/agentation.js?v=27dc156e:13619:3\n    at Object.react_stack_bottom_frame (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:14178:13)\n    at runWithFiberInDEV (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:944:66)\n    at commitHookEffectListMount (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:6901:153)\n    at commitHookPassiveMountEffects (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:6936:55)\n    at commitPassiveMountOnFiber (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:8313:22)\n    at recursivelyTraversePassiveMountEffects (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:8300:313)\n    at commitPassiveMountOnFiber (http://localhost:3001/node_modules/.vite/deps/react-dom_client.js?v=27dc156e:8361:772)"
+      }
+    ],
+    "network": []
+  }
+]

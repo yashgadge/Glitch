@@ -1,0 +1,14 @@
+{
+  "cookies": [],
+  "origins": [
+    {
+      "origin": "https://admin-glitch-36.web.app",
+      "localStorage": [
+        {
+          "name": "firebase:authUser:AIzaSyD81Wyfqv2pWtTeaT09gflUxeLQTNp-GhQ:[DEFAULT]",
+          "value": "{\"uid\":\"wEwgDDZ7vwVIQuvHnJKylQNgkG32\",\"email\":\"yashgadge11155@gmail.com\",\"emailVerified\":false,\"isAnonymous\":false,\"providerData\":[{\"providerId\":\"password\",\"uid\":\"yashgadge11155@gmail.com\",\"displayName\":null,\"email\":\"yashgadge11155@gmail.com\",\"phoneNumber\":null,\"photoURL\":null}],\"stsTokenManager\":{\"refreshToken\":\"AMf-vBy0g2AereoJwj-4KJSKB20sztw7FJDCZt4rrLKm8QI5FlhJZkcoElPFuDliBW8QfDu2z86mQUC-o2iGVk8sIFp63svUT7EFlr871P9teZa5NRnsy1GHpTVtOZljliTJRdVm3P_feUHLiVekLSSusRArv7gPhMFJfSBFAGhgW3DgFCcLp22I6Fd7x3G1GZEmdeS6AqG3OgbGnoKmInn71kFarlUoGA\",\"accessToken\":\"eyJhbGciOiJSUzI1NiIsImtpZCI6ImVjMjdhOWI2YWEzMDg4ZDI3Y2FkYjFjNjRmYTJmYTQ1Y2Y5ZmQ5ZTciLCJ0eXAiOiJKV1QifQ.eyJpc3MiOiJodHRwczovL3NlY3VyZXRva2VuLmdvb2dsZS5jb20vZ2xpdGNoLTM2IiwiYXVkIjoiZ2xpdGNoLTM2IiwiYXV0aF90aW1lIjoxNzg5OTc5NDQxLCJ1c2VyX2lkIjoid0V3Z0REWjd2d1ZJUXV2SG5KS3lsUU5na0czMiIsInN1YiI6IndFd2dERFo3dndWSVF1dkhuSkt5bFFOZ2tHMzIiLCJpYXQiOjE3ODk5Nzk0NDEsImV4cCI6MTc4OTk4MzA0MSwiZW1haWwiOiJ5YXNoZ2FkZ2UxMTE1NUBnbWFpbC5jb20iLCJlbWFpbF92ZXJpZmllZCI6ZmFsc2UsImZpcmViYXNlIjp7ImlkZW50aXRpZXMiOnsiZW1haWwiOlsieWFzaGdhZGdlMTExNTVAZ21haWwuY29tIl19LCJzaWduX2luX3Byb3ZpZGVyIjoicGFzc3dvcmQifX0.y4zCOraEksYGHhVVFDNlH-H3jPUDdNJ6L6FBnlgODNDwazHkjCPmFLioAhN9OSYi6c_l58-BIcy7WLkX7CphTq1kwO4TqgycwsgdzI-J4epL_8wLowLwQfN8MLPIC06Wk1UrfNguP_sS7Hhk0dlC385lX3kklMyh2SG__nE7jN6MmrFbsPcyy-w0smvZcpUuKyMzbPZPNogzZFQvG9eahIuKSRDhs7IyneiBWz-1VDbgfh_mOzh-wdGWsaQ8Y3r8TucPPfKRcxoSEF99XAgsN9UeMXdIlCMGP8pvEr8D-6A5Mys0yjjdvVv80gD3QCEqMcO40HJFpl-KOezNuxWomg\",\"expirationTime\":1789983041863},\"createdAt\":\"1789066166502\",\"lastLoginAt\":\"1789979441211\",\"apiKey\":\"AIzaSyD81Wyfqv2pWtTeaT09gflUxeLQTNp-GhQ\",\"appName\":\"[DEFAULT]\"}"
+        }
+      ]
+    }
+  ]
+}
