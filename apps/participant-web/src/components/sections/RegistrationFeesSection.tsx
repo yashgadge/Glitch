@@ -8,6 +8,7 @@ import type { CatalogItem } from '@shared/types/models';
 
 export default function RegistrationFeesSection() {
   const [regPrice, setRegPrice] = useState<number>(1500);
+  const [showFood, setShowFood] = useState<boolean>(true);
   const [loading, setLoading] = useState<boolean>(true);
 
   useEffect(() => {
@@ -16,6 +17,9 @@ export default function RegistrationFeesSection() {
         const config = docSnap.data();
         if (config.registrationFeeAmount !== undefined) {
           setRegPrice(config.registrationFeeAmount);
+        }
+        if (config.showFoodIncluded !== undefined) {
+          setShowFood(config.showFoodIncluded);
         }
       }
       setLoading(false);
@@ -66,6 +70,12 @@ export default function RegistrationFeesSection() {
                   <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                   <span>High-speed Wi-Fi and mentorship</span>
                 </li>
+                {showFood && (
+                  <li className="flex items-start gap-3">
+                    <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
+                    <span>1 Breakfast & 1 Dinner Included</span>
+                  </li>
+                )}
                 <li className="flex items-start gap-3">
                   <Check className="w-5 h-5 text-green-500 shrink-0 mt-0.5" />
                   <span>Official Digital Pass for venue entry</span>

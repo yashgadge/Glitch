@@ -178,7 +178,7 @@ export default function AdminHome() {
         </button>
         
         <button 
-          onClick={() => navigate('/workspace/settings')}
+          onClick={() => navigate('/workspace/event')}
           className="flex flex-col items-center justify-center p-6 bg-white/5 hover:bg-white/10 border border-white/10 hover:border-white/20 rounded-xl transition-all group"
         >
           <div className="w-12 h-12 bg-white/5 rounded-full flex items-center justify-center mb-3 group-hover:bg-primary/20 group-hover:text-primary transition-colors text-gray-400">

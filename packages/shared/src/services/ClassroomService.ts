@@ -143,4 +143,15 @@ export class ClassroomService {
       throw new Error(error.message || "Failed to move team.");
     }
   }
+
+  static async autoAssignPaidTeams(): Promise<{ assigned: number; failed: number }> {
+    try {
+      const assignFn = httpsCallable(functions, 'autoAssignPaidTeams');
+      const result = await assignFn();
+      return result.data as { assigned: number; failed: number };
+    } catch (error: any) {
+      console.error("Error auto-assigning teams:", error);
+      throw new Error(error.message || "Failed to auto-assign teams.");
+    }
+  }
 }

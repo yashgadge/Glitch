@@ -23,9 +23,12 @@ export default function EventSettings() {
     activeRoundId: '',
     isRegistrationOpen: false,
     registrationFeeAmount: 1500,
+    registrationDeadline: '',
+    hackathonDateDisplay: '',
     isHackathonActive: false,
     announcementsEnabled: false,
     trackSelectionLocked: false,
+    showFoodIncluded: false,
   });
   const [catalog, setCatalog] = useState<CatalogItem[]>([]);
   const [timeline, setTimeline] = useState<EventTimelineItem[]>([]);
@@ -46,9 +49,12 @@ export default function EventSettings() {
           activeRoundId: config.activeRoundId || '',
           isRegistrationOpen: config.isRegistrationOpen || false,
           registrationFeeAmount: config.registrationFeeAmount || 1500,
+          registrationDeadline: config.registrationDeadline || '',
+          hackathonDateDisplay: config.hackathonDateDisplay || '',
           isHackathonActive: config.isHackathonActive || false,
           announcementsEnabled: config.announcementsEnabled || false,
           trackSelectionLocked: config.trackSelectionLocked || false,
+          showFoodIncluded: config.showFoodIncluded || false,
         });
         setTimeline(config.timeline || []);
       }
@@ -85,9 +91,12 @@ export default function EventSettings() {
         activeRoundId: formData.activeRoundId,
         isRegistrationOpen: formData.isRegistrationOpen,
         registrationFeeAmount: formData.registrationFeeAmount,
+        registrationDeadline: formData.registrationDeadline,
+        hackathonDateDisplay: formData.hackathonDateDisplay,
         isHackathonActive: formData.isHackathonActive,
         announcementsEnabled: formData.announcementsEnabled,
         trackSelectionLocked: formData.trackSelectionLocked,
+        showFoodIncluded: formData.showFoodIncluded,
         timeline: timeline
       }, user.uid);
       success('Event settings updated successfully');
@@ -203,7 +212,7 @@ export default function EventSettings() {
         <div>
           <h4 className="text-sm font-medium text-yellow-500 font-inter mb-1">Architecture Frozen</h4>
           <p className="text-sm text-yellow-500/80 font-inter">
-            Extended event metadata (Name, Edition, Venue, Dates, Tracks) cannot be configured because the backend architecture is frozen and `EventConfig` model does not support these fields. Proceeding with supported toggles only.
+            Extended event metadata (Name, Edition, Venue, Tracks) cannot be configured because the backend architecture is frozen. Date display strings can now be configured below.
           </p>
         </div>
       </div>
@@ -250,6 +259,23 @@ export default function EventSettings() {
               </div>
             </label>
 
+            <label className="flex items-center justify-between p-4 bg-white/5 border border-white/10 rounded-lg cursor-pointer hover:bg-white/10 transition-colors">
+              <div>
+                <span className="block text-sm font-medium text-white font-inter">Show Food Included Notice</span>
+                <span className="block text-xs text-gray-400 mt-0.5 font-inter">Display '1 Breakfast & 1 Dinner Included' on registration and landing pages.</span>
+              </div>
+              <div className="relative inline-block w-12 h-6 rounded-full transition-colors">
+                <input 
+                  type="checkbox" 
+                  name="showFoodIncluded"
+                  checked={formData.showFoodIncluded}
+                  onChange={handleChange}
+                  className="peer sr-only" 
+                />
+                <div className="w-11 h-6 bg-gray-700 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary"></div>
+              </div>
+            </label>
+
             <div className="flex items-center justify-between p-4 bg-black/50 rounded-lg border border-white/5">
               <div className="flex items-center gap-3">
                 <div className="w-10 h-10 rounded-lg bg-green-500/10 flex items-center justify-center">
@@ -269,25 +295,56 @@ export default function EventSettings() {
                 />
               </div>
             </div>
+
+            <div className="flex items-center justify-between p-4 bg-black/50 rounded-lg border border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-red-500/10 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-red-500" />
+                </div>
+                <div>
+                  <h4 className="font-bebas text-xl text-white tracking-wider">REGISTRATION DEADLINE</h4>
+                  <p className="text-sm text-gray-400 font-inter">Global deadline for participants. Empty means no visible deadline.</p>
+                </div>
+              </div>
+              <div className="w-48">
+                <Input 
+                  type="datetime-local"
+                  name="registrationDeadline"
+                  value={
+                    formData.registrationDeadline 
+                      ? new Date(new Date(formData.registrationDeadline).getTime() - (new Date().getTimezoneOffset() * 60000)).toISOString().slice(0, 16) 
+                      : ''
+                  }
+                  onChange={(e) => setFormData(prev => ({ 
+                    ...prev, 
+                    registrationDeadline: e.target.value ? new Date(e.target.value).toISOString() : '' 
+                  }))}
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-black/50 rounded-lg border border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-blue-500" />
+                </div>
+                <div>
+                  <h4 className="font-bebas text-xl text-white tracking-wider">HACKATHON DATE DISPLAY</h4>
+                  <p className="text-sm text-gray-400 font-inter">The date string shown in the UI (e.g. "OCTOBER 10-11, 2026").</p>
+                </div>
+              </div>
+              <div className="w-48">
+                <Input 
+                  type="text"
+                  name="hackathonDateDisplay"
+                  value={formData.hackathonDateDisplay}
+                  onChange={handleChange}
+                  placeholder="OCTOBER 24-25, 2026"
+                />
+              </div>
+            </div>
           </div>
-          <div className="pt-6 border-t border-white/10 flex justify-between items-center">
-             <Button type="button" variant="outline" className="border-yellow-500/30 text-yellow-500 hover:bg-yellow-500/10" onClick={async () => {
-               if(!confirm('This will assign sequential GL26-P- IDs to all users missing one. Continue?')) return;
-               setIsSaving(true);
-               try {
-                 const ParticipantService = (await import('@shared/services/ParticipantService')).ParticipantService;
-                 const generated = await ParticipantService.generateMissingIds();
-                 setGeneratedIds(generated);
-                 success('Migration Complete', `Generated IDs for ${generated.length} participants.`);
-               } catch (err: any) {
-                 toastError('Migration Failed', err.message);
-               } finally {
-                 setIsSaving(false);
-               }
-             }} isLoading={isSaving}>
-               Fix Missing IDs
-             </Button>
-             
+          <div className="pt-6 border-t border-white/10 flex justify-end">
              <Button type="submit" variant="primary" leftIcon={Save} isLoading={isSaving}>
                Save Configuration
              </Button>

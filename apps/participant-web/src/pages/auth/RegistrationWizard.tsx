@@ -20,6 +20,7 @@ export default function RegistrationWizard() {
   const [step, setStep] = useState(0); 
   const [loading, setLoading] = useState(false);
   const [isProcessing, setIsProcessing] = useState(false);
+  const [showFood, setShowFood] = useState(true);
   
   // Auth state for Step 0
   const [authEmail, setAuthEmail] = useState('');
@@ -48,6 +49,12 @@ export default function RegistrationWizard() {
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     script.async = true;
     document.body.appendChild(script);
+
+    getDoc(doc(db, 'system', 'eventConfig')).then(docSnap => {
+      if (docSnap.exists() && docSnap.data().showFoodIncluded !== undefined) {
+        setShowFood(docSnap.data().showFoodIncluded);
+      }
+    });
 
     return () => {
       if (document.body.contains(script)) {
@@ -178,7 +185,15 @@ export default function RegistrationWizard() {
         <Link to="/" className="inline-block text-gray-400 hover:text-white mb-6 text-sm tracking-widest font-inter pl-4">
           &larr; BACK TO HOME
         </Link>
-        <h2 className="text-5xl font-bebas text-white tracking-widest mb-8 text-center drop-shadow-lg">COMPLETE YOUR REGISTRATION</h2>
+        <h2 className="text-5xl font-bebas text-white tracking-widest mb-4 text-center drop-shadow-lg">COMPLETE YOUR REGISTRATION</h2>
+        
+        {showFood && (
+          <div className="bg-primary/10 border border-primary/30 rounded-lg p-3 mb-8 text-center">
+            <p className="text-primary font-inter text-sm font-medium">
+              ✨ Registration includes 1 Breakfast & 1 Dinner during the event! ✨
+            </p>
+          </div>
+        )}
         
         <Stepper 
           activeStep={user ? 2 : 1}

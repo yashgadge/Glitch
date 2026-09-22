@@ -466,8 +466,11 @@ export interface EventConfig {
   activeRoundId: string;
   isRegistrationOpen: boolean;
   registrationFeeAmount?: number;
+  registrationDeadline?: string;
+  hackathonDateDisplay?: string;
   isHackathonActive: boolean;
   announcementsEnabled: boolean;
+  showFoodIncluded?: boolean;
   catalog?: CatalogItem[]; // Dynamic pricing catalog
   timeline?: EventTimelineItem[]; // Dynamic event schedule timeline
   isSubmissionOpen?: boolean;

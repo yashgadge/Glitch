@@ -484,7 +484,7 @@ export default function ParticipantTeam() {
                 {!isLocked && isLeader && (
                   <div className="pt-6 border-t border-white/10">
                     <div className="mb-6">
-                      <h4 className="font-bebas text-2xl text-white tracking-widest mb-2">FINALIZE REGISTRATION</h4>
+                      <h4 className="font-bebas text-2xl text-white tracking-widest mb-4">FINALIZE REGISTRATION</h4>
                       
                       {!isRegistrationOpen && (
                         <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 mb-4">
@@ -493,6 +493,20 @@ export default function ParticipantTeam() {
                           </p>
                         </div>
                       )}
+                      
+                      <div className="flex items-center justify-between p-4 bg-black/50 border border-white/10 rounded-lg mb-4">
+                        <span className="font-bebas text-xl text-gray-300 tracking-widest">REGISTRATION FEE</span>
+                        <span className="font-bebas text-4xl text-primary tracking-wider drop-shadow-[0_0_10px_rgba(227,6,19,0.5)]">₹{feeAmount}</span>
+                      </div>
+
+                      <Button 
+                        className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-green-500 text-white border-0 hover:from-green-500 hover:to-green-400 py-6 text-lg mb-4"
+                        onClick={handlePayAndLock}
+                        disabled={isProcessing || !isRegistrationOpen}
+                        isLoading={isProcessing}
+                      >
+                        <CreditCard className="w-5 h-5" /> PAY REGISTRATION FEE
+                      </Button>
                       
                       <div className="p-4 rounded-lg bg-red-500/10 border border-red-500/30 mb-4">
                         <div className="flex items-center gap-2 mb-2">
@@ -503,26 +517,13 @@ export default function ParticipantTeam() {
                           Once payment is complete, your team will be <strong className="text-white">PERMANENTLY LOCKED</strong>. You will NOT be able to add or remove members later. Ensure all {members.length}/4 members have successfully joined before proceeding.
                         </p>
                       </div>
-
-                      <div className="flex items-center justify-between p-4 bg-black/50 border border-white/10 rounded-lg mb-4">
-                        <span className="font-bebas text-xl text-gray-300 tracking-widest">TEAM REGISTRATION FEE</span>
-                        <span className="font-bebas text-4xl text-primary tracking-wider drop-shadow-[0_0_10px_rgba(227,6,19,0.5)]">₹{feeAmount}</span>
-                      </div>
                       
-                      <div className="flex flex-wrap gap-3 mt-3 text-xs text-primary font-inter">
+                      <div className="flex flex-wrap gap-3 text-xs text-primary font-inter justify-center">
                         <a href="/terms" target="_blank" className="hover:text-white underline">Terms & Conditions</a>
                         <span className="text-gray-600">|</span>
                         <a href="/refund-policy" target="_blank" className="hover:text-white underline">Refund Policy</a>
                       </div>
                     </div>
-                    <Button 
-                      className="w-full flex items-center justify-center gap-2 bg-gradient-to-r from-green-600 to-green-500 text-white border-0 hover:from-green-500 hover:to-green-400 mt-2 py-6 text-lg"
-                      onClick={handlePayAndLock}
-                      disabled={isProcessing || !isRegistrationOpen}
-                      isLoading={isProcessing}
-                    >
-                      <CreditCard className="w-5 h-5" /> PAY REGISTRATION FEE
-                    </Button>
                   </div>
                 )}
 

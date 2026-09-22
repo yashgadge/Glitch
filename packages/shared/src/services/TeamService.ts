@@ -696,7 +696,6 @@ export class TeamService {
 
   static async adminDeleteTeam(teamId: string): Promise<void> {
     try {
-      const functions = getFunctions();
       const deleteFn = httpsCallable(functions, 'adminDeleteTeam');
       await deleteFn({ teamId });
     } catch (error: any) {

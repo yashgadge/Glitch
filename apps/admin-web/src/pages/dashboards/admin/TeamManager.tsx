@@ -263,7 +263,7 @@ export default function TeamManager() {
               <RotateCcw className="w-4 h-4" />
             </Button>
           )}
-          {profile?.role === 'super_admin' && (
+          {(hasPermission('teams.manage') || profile?.role === 'super_admin') && (
             <Button variant="outline" size="sm" onClick={() => { setSelectedTeam(row); setDeleteModalOpen(true); }} className="text-red-500 border-red-500/30 hover:bg-red-500/10 ml-2" title="Delete Team">
               <Trash2 className="w-4 h-4" />
             </Button>

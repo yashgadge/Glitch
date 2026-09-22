@@ -148,7 +148,7 @@ export default function CMSManager() {
                     </div>
                   </div>
                 </div>
-                <Button variant="ghost" size="sm" onClick={() => handleDeleteResource(r.id)} className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">
+                <Button variant="ghost" size="sm" onClick={() => handleDelete(r.id)} className="text-red-400 hover:text-red-300 opacity-0 group-hover:opacity-100 transition-opacity">
                   <Trash2 className="w-4 h-4" />
                 </Button>
               </div>

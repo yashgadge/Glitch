@@ -1,5 +1,5 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
+import { NavLink, Link } from 'react-router-dom';
 import { cn } from '../../ui/Card';
 import { ChevronLeft, ChevronRight, Zap } from 'lucide-react';
 
@@ -28,8 +28,11 @@ export function Sidebar({ items, collapsed, onToggle, className }: SidebarProps)
     >
       <div className="h-16 flex items-center justify-between px-4 border-b border-white/10 shrink-0">
         <div className={cn("flex items-center gap-2 overflow-hidden transition-all", collapsed ? "w-0 opacity-0" : "w-full opacity-100")}>
-          <Zap className="w-6 h-6 text-primary shrink-0" />
-          <span className="font-bebas text-xl tracking-widest text-white mt-1 shrink-0">GLITCH 36</span>
+          <Link to="/workspace" className="flex items-center group">
+            <span className="font-bebas text-xl tracking-widest text-white mt-1 shrink-0">PANDORA</span>
+            <span className="font-inter font-light text-[0.4em] text-gray-400 mx-1 uppercase mt-1 shrink-0">X</span>
+            <span className="font-bebas text-xl tracking-widest text-white mt-1 shrink-0">GLITCH 36</span>
+          </Link>
         </div>
         
         <button 

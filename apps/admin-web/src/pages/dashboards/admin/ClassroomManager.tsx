@@ -201,6 +201,19 @@ export default function ClassroomManager() {
     }
   ];
 
+  const handleAutoAssign = async () => {
+    if (!confirm('Are you sure you want to auto-assign all PAID and unassigned teams to available classrooms?')) return;
+    setIsProcessing(true);
+    try {
+      const result = await ClassroomService.autoAssignPaidTeams();
+      success('Auto-Assign Complete', `Assigned ${result.assigned} teams. Failed/Skipped: ${result.failed}`);
+    } catch (err: any) {
+      toastError('Auto-Assign Failed', err.message);
+    } finally {
+      setIsProcessing(false);
+    }
+  };
+
   return (
     <div className="space-y-6">
       <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-4 mb-8">
@@ -212,7 +225,12 @@ export default function ClassroomManager() {
         </div>
         <div className="flex gap-3">
           {hasPermission('classrooms.manage') && (
-            <Button variant="primary" leftIcon={MapPin} onClick={() => setIsCreateModalOpen(true)}>ADD CLASSROOM</Button>
+            <>
+              <Button variant="outline" className="border-blue-500/50 text-blue-400 hover:bg-blue-500/10" onClick={handleAutoAssign} isLoading={isProcessing}>
+                Auto-Assign PAID Teams
+              </Button>
+              <Button variant="primary" leftIcon={MapPin} onClick={() => setIsCreateModalOpen(true)}>ADD CLASSROOM</Button>
+            </>
           )}
         </div>
       </div>

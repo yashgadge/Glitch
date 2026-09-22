@@ -33,9 +33,11 @@ export default function Sidebar({ isOpen, setIsOpen }: SidebarProps) {
       >
         {/* Brand */}
         <div className="h-20 flex items-center px-6 border-b border-white/10 shrink-0">
-          <Link to="/" className="flex items-center gap-1 group">
+          <Link to="/" className="flex items-center group">
+            <span className="font-bebas text-3xl text-white tracking-wider drop-shadow-md group-hover:text-primary transition-colors">PANDORA</span>
+            <span className="font-inter font-light text-[0.5em] text-gray-400 mx-2 uppercase mt-1">X</span>
             <span className="font-bebas text-3xl text-white tracking-wider drop-shadow-md group-hover:text-primary transition-colors">GLITCH</span>
-            <span className="font-bebas text-lg text-primary mt-1 drop-shadow-md group-hover:text-white transition-colors">36</span>
+            <span className="font-bebas text-lg text-primary ml-1 mt-1 drop-shadow-md group-hover:text-white transition-colors">36</span>
           </Link>
         </div>
 
