@@ -157,7 +157,11 @@ export default function EventSettings() {
     setTimeline(prev => {
       const exists = prev.find(i => i.id === itemToSave.id);
       if (exists) return prev.map(i => i.id === itemToSave.id ? itemToSave : i);
-      return [...prev, itemToSave].sort((a, b) => new Date(a.time).getTime() - new Date(b.time).getTime());
+      return [...prev, itemToSave].sort((a, b) => {
+        const timeA = a.time.includes('T') ? a.time.split('T')[1] : a.time;
+        const timeB = b.time.includes('T') ? b.time.split('T')[1] : b.time;
+        return timeA.localeCompare(timeB);
+      });
     });
     
     setIsTimelineModalOpen(false);
@@ -450,20 +454,20 @@ export default function EventSettings() {
                 size="sm" 
                 onClick={() => {
                   const defaultEvents: EventTimelineItem[] = [
-                    { id: '1', time: '2026-10-10T08:00:00Z', day: 1, title: 'Registration & Check-In', description: 'Get your swag bags, ID badges, and find your designated hacking stations.' },
-                    { id: '2', time: '2026-10-10T09:00:00Z', day: 1, title: 'Opening Ceremony', description: 'Keynote speakers, track announcements, and the official start countdown.' },
-                    { id: '3', time: '2026-10-10T10:00:00Z', day: 1, title: 'Problem Statement Release', description: 'The official problem statements are revealed to all participants.' },
-                    { id: '4', time: '2026-10-10T10:30:00Z', day: 1, title: 'Hackathon Begins 🚀', description: '36 hours on the clock. Start building.' },
-                    { id: '5', time: '2026-10-10T15:00:00Z', day: 1, title: 'Mentorship Session', description: 'Industry experts will circulate to provide feedback on initial architecture.' },
-                    { id: '6', time: '2026-10-10T19:00:00Z', day: 1, title: 'Dinner Break 🍽️', description: 'Fuel up for the night shift.' },
-                    { id: '7', time: '2026-10-10T21:00:00Z', day: 1, title: 'Progress Checkpoint', description: 'Quick check-in on your team\'s progress.' },
-                    { id: '8', time: '2026-10-10T23:00:00Z', day: 1, title: 'Fun & Networking Session 🎉', description: 'Take a break, play some games, and network with other hackers.' },
-                    { id: '9', time: '2026-10-11T08:00:00Z', day: 2, title: 'Breakfast & Refresh', description: 'Morning fuel to push through the final stretch.' },
-                    { id: '10', time: '2026-10-11T11:00:00Z', day: 2, title: 'Final Checkpoint', description: 'Last mentor feedback before submissions.' },
-                    { id: '11', time: '2026-10-11T13:00:00Z', day: 2, title: 'Final Submission 📥', description: 'Keyboards down. Code freeze and project submissions.' },
-                    { id: '12', time: '2026-10-11T14:00:00Z', day: 2, title: 'Project Evaluation ⚖️', description: 'Present your solutions to the judges.' },
-                    { id: '13', time: '2026-10-11T17:30:00Z', day: 2, title: 'Results & Prize Distribution 🏆', description: 'Winners announced and prizes distributed.' },
-                    { id: '14', time: '2026-10-11T20:30:00Z', day: 2, title: 'Closing Ceremony 🎊', description: 'Official closing of the hackathon.' },
+                    { id: '1', time: '2026-01-01T08:00', day: 1, title: 'Registration & Check-In', description: 'Get your swag bags, ID badges, and find your designated hacking stations.' },
+                    { id: '2', time: '2026-01-01T09:00', day: 1, title: 'Opening Ceremony', description: 'Keynote speakers, track announcements, and the official start countdown.' },
+                    { id: '3', time: '2026-01-01T10:00', day: 1, title: 'Problem Statement Release', description: 'The official problem statements are revealed to all participants.' },
+                    { id: '4', time: '2026-01-01T10:30', day: 1, title: 'Hackathon Begins 🚀', description: '36 hours on the clock. Start building.' },
+                    { id: '5', time: '2026-01-01T15:00', day: 1, title: 'Mentorship Session', description: 'Industry experts will circulate to provide feedback on initial architecture.' },
+                    { id: '6', time: '2026-01-01T19:00', day: 1, title: 'Dinner Break 🍽️', description: 'Fuel up for the night shift.' },
+                    { id: '7', time: '2026-01-01T21:00', day: 1, title: 'Progress Checkpoint', description: 'Quick check-in on your team\'s progress.' },
+                    { id: '8', time: '2026-01-01T23:00', day: 1, title: 'Fun & Networking Session 🎉', description: 'Take a break, play some games, and network with other hackers.' },
+                    { id: '9', time: '2026-01-01T08:00', day: 2, title: 'Breakfast & Refresh', description: 'Morning fuel to push through the final stretch.' },
+                    { id: '10', time: '2026-01-01T11:00', day: 2, title: 'Final Checkpoint', description: 'Last mentor feedback before submissions.' },
+                    { id: '11', time: '2026-01-01T13:00', day: 2, title: 'Final Submission 📥', description: 'Keyboards down. Code freeze and project submissions.' },
+                    { id: '12', time: '2026-01-01T14:00', day: 2, title: 'Project Evaluation ⚖️', description: 'Present your solutions to the judges.' },
+                    { id: '13', time: '2026-01-01T17:30', day: 2, title: 'Results & Prize Distribution 🏆', description: 'Winners announced and prizes distributed.' },
+                    { id: '14', time: '2026-01-01T20:30', day: 2, title: 'Closing Ceremony 🎊', description: 'Official closing of the hackathon.' },
                   ];
                   setTimeline(defaultEvents);
                   toastError('Timeline Loaded', 'Click Save Timeline Changes to confirm.');
@@ -548,14 +552,14 @@ export default function EventSettings() {
             
             <div className="grid grid-cols-2 gap-4">
               <div>
-                <Label>Date & Time</Label>
+                <Label>Time</Label>
                 <Input 
                   required 
-                  type="datetime-local" 
-                  value={editingTimelineItem.time ? new Date(editingTimelineItem.time).toISOString().slice(0, 16) : ''}
+                  type="time" 
+                  value={editingTimelineItem.time ? editingTimelineItem.time.slice(11, 16) : ''}
                   onChange={e => setEditingTimelineItem({
                     ...editingTimelineItem, 
-                    time: e.target.value ? new Date(e.target.value).toISOString() : ''
+                    time: e.target.value ? `2026-01-01T${e.target.value}` : ''
                   })} 
                 />
               </div>
