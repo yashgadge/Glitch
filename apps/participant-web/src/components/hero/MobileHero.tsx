@@ -6,9 +6,19 @@ import {
 } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import { FaGithub, FaLinkedin, FaInstagram, FaDiscord } from 'react-icons/fa';
+import { EventConfigService } from '@shared/services/EventConfigService';
+import type { EventConfig } from '@shared/types/models';
 
 export default function MobileHero() {
   const [isLoaded, setIsLoaded] = useState(true);
+  const [config, setConfig] = useState<EventConfig | null>(null);
+
+  useEffect(() => {
+    const unsub = EventConfigService.subscribeToConfig((data) => {
+      setConfig(data);
+    });
+    return () => unsub();
+  }, []);
 
 
   const containerVariants: any = {
@@ -66,7 +76,9 @@ export default function MobileHero() {
            <div className="absolute inset-0 bg-yellow-500/20 rounded-full blur group-hover:opacity-100 opacity-50 transition-opacity" />
            <div className="relative bg-black/60 border border-yellow-500/50 backdrop-blur-xl px-5 py-1.5 rounded-full flex items-center justify-center gap-2 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
               <span className="w-1.5 h-1.5 rounded-full bg-yellow-500 animate-pulse"></span>
-              <span className="font-bebas tracking-wider text-yellow-500 text-base pt-0.5">REGISTRATION CLOSES: <span className="text-white">26 SEPT, 12:00 AM</span></span>
+              <span className="font-bebas tracking-wider text-yellow-500 text-base pt-0.5">REGISTRATION CLOSES: <span className="text-white">
+                {config?.registrationDeadline ? new Date(config.registrationDeadline).toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).toUpperCase() : '26 SEPT, 12:00 AM'}
+              </span></span>
            </div>
         </div>
       </div>
@@ -125,8 +137,7 @@ export default function MobileHero() {
           <div className="flex-1 flex items-center gap-3">
             <Calendar className="w-5 h-5 text-white/80" />
             <div className="flex flex-col">
-              <span className="font-inter text-[10px] tracking-widest text-yellow-500 font-bold">OCTOBER 24-25,</span>
-              <span className="font-inter text-[10px] tracking-widest text-white/80 font-medium">2026</span>
+              <span className="font-inter text-[10px] tracking-widest text-yellow-500 font-bold">{config?.hackathonDateDisplay || 'OCTOBER 24-25, 2026'}</span>
             </div>
           </div>
           <div className="w-[1px] h-8 bg-white/20 mx-4"></div>
@@ -156,7 +167,7 @@ export default function MobileHero() {
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
             </svg>
             <p className="font-bebas text-xl text-[#3b82f6] tracking-wider pt-1">
-              REGISTRATION FEE: ₹599
+              REGISTRATION FEE: ₹{config?.registrationFeeAmount || 599}
             </p>
           </div>
         </motion.div>

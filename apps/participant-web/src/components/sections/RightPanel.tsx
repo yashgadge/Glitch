@@ -1,8 +1,19 @@
+import { useState, useEffect } from 'react';
 import { motion } from 'framer-motion';
 import { Trophy } from 'lucide-react';
 import { FaDiscord, FaGithub, FaLinkedin, FaInstagram } from 'react-icons/fa';
+import { EventConfigService } from '@shared/services/EventConfigService';
+import type { EventConfig } from '@shared/types/models';
 
 export default function RightPanel() {
+  const [config, setConfig] = useState<EventConfig | null>(null);
+
+  useEffect(() => {
+    const unsub = EventConfigService.subscribeToConfig((data) => {
+      setConfig(data);
+    });
+    return () => unsub();
+  }, []);
   const containerVariants = {
     hidden: { opacity: 0, x: 50 },
     visible: { opacity: 1, x: 0, transition: { duration: 0.8, delay: 1.2, staggerChildren: 0.2 } }
@@ -29,7 +40,7 @@ export default function RightPanel() {
             REGISTRATION DEADLINE
           </p>
           <p className="font-bebas text-2xl text-white tracking-wider">
-            26 SEPT, 12:00 AM
+            {config?.registrationDeadline ? new Date(config.registrationDeadline).toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).toUpperCase() : '26 SEPT, 12:00 AM'}
           </p>
         </div>
       </motion.div>
@@ -42,7 +53,7 @@ export default function RightPanel() {
         <Trophy className="w-16 h-16 text-yellow-500 mb-4 drop-shadow-[0_0_15px_rgba(234,179,8,0.5)] relative z-10 transition-transform duration-300 group-hover:scale-110" />
         
         <div className="text-center relative z-10 mb-4">
-          <p className="font-bebas text-2xl text-yellow-500 tracking-wider mb-1">OCTOBER 24-25, 2026</p>
+          <p className="font-bebas text-2xl text-yellow-500 tracking-wider mb-1">{config?.hackathonDateDisplay || 'OCTOBER 24-25, 2026'}</p>
           <p className="font-inter text-[10px] tracking-[0.2em] text-white font-bold drop-shadow-md">OFFLINE HACKATHON</p>
         </div>
 
@@ -62,7 +73,7 @@ export default function RightPanel() {
             <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M3 10h18M7 15h1m4 0h1m-7 4h12a3 3 0 003-3V8a3 3 0 00-3-3H6a3 3 0 00-3 3v8a3 3 0 003 3z" />
           </svg>
           <p className="font-bebas text-xl text-[#3b82f6] tracking-wider pt-1">
-            REGISTRATION FEE: ₹599
+            REGISTRATION FEE: ₹{config?.registrationFeeAmount || 599}
           </p>
         </div>
       </motion.div>

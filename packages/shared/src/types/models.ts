@@ -469,6 +469,8 @@ export interface EventConfig {
   registrationFeeAmount?: number;
   registrationDeadline?: string;
   hackathonDateDisplay?: string;
+  day1DateDisplay?: string;
+  day2DateDisplay?: string;
   isHackathonActive: boolean;
   announcementsEnabled: boolean;
   showFoodIncluded?: boolean;

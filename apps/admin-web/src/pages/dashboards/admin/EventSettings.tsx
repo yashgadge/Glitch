@@ -25,6 +25,8 @@ export default function EventSettings() {
     registrationFeeAmount: 1500,
     registrationDeadline: '',
     hackathonDateDisplay: '',
+    day1DateDisplay: '',
+    day2DateDisplay: '',
     isHackathonActive: false,
     announcementsEnabled: false,
     trackSelectionLocked: false,
@@ -51,6 +53,8 @@ export default function EventSettings() {
           registrationFeeAmount: config.registrationFeeAmount || 1500,
           registrationDeadline: config.registrationDeadline || '',
           hackathonDateDisplay: config.hackathonDateDisplay || '',
+          day1DateDisplay: config.day1DateDisplay || '',
+          day2DateDisplay: config.day2DateDisplay || '',
           isHackathonActive: config.isHackathonActive || false,
           announcementsEnabled: config.announcementsEnabled || false,
           trackSelectionLocked: config.trackSelectionLocked || false,
@@ -93,6 +97,8 @@ export default function EventSettings() {
         registrationFeeAmount: formData.registrationFeeAmount,
         registrationDeadline: formData.registrationDeadline,
         hackathonDateDisplay: formData.hackathonDateDisplay,
+        day1DateDisplay: formData.day1DateDisplay,
+        day2DateDisplay: formData.day2DateDisplay,
         isHackathonActive: formData.isHackathonActive,
         announcementsEnabled: formData.announcementsEnabled,
         trackSelectionLocked: formData.trackSelectionLocked,
@@ -343,6 +349,48 @@ export default function EventSettings() {
                 />
               </div>
             </div>
+
+            <div className="flex items-center justify-between p-4 bg-black/50 rounded-lg border border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-blue-500" />
+                </div>
+                <div>
+                  <h4 className="font-bebas text-xl text-white tracking-wider">DAY 1 DATE DISPLAY</h4>
+                  <p className="text-sm text-gray-400 font-inter">Shown in Timeline (e.g. "(OCT 24)")</p>
+                </div>
+              </div>
+              <div className="w-48">
+                <Input 
+                  type="text"
+                  name="day1DateDisplay"
+                  value={formData.day1DateDisplay}
+                  onChange={handleChange}
+                  placeholder="(OCT 24)"
+                />
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between p-4 bg-black/50 rounded-lg border border-white/5">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 rounded-lg bg-blue-500/10 flex items-center justify-center">
+                  <Clock className="w-5 h-5 text-blue-500" />
+                </div>
+                <div>
+                  <h4 className="font-bebas text-xl text-white tracking-wider">DAY 2 DATE DISPLAY</h4>
+                  <p className="text-sm text-gray-400 font-inter">Shown in Timeline (e.g. "(OCT 25)")</p>
+                </div>
+              </div>
+              <div className="w-48">
+                <Input 
+                  type="text"
+                  name="day2DateDisplay"
+                  value={formData.day2DateDisplay}
+                  onChange={handleChange}
+                  placeholder="(OCT 25)"
+                />
+              </div>
+            </div>
           </div>
           <div className="pt-6 border-t border-white/10 flex justify-end">
              <Button type="submit" variant="primary" leftIcon={Save} isLoading={isSaving}>
@@ -395,8 +443,34 @@ export default function EventSettings() {
               );
             })
           ) : (
-            <div className="p-8 text-center text-gray-500 font-inter border border-dashed border-white/10 rounded-xl">
-              No timeline events configured. Click "Add Event" to create your schedule.
+            <div className="p-8 text-center text-gray-500 font-inter border border-dashed border-white/10 rounded-xl flex flex-col items-center gap-4">
+              <p>No timeline events configured. Click "Add Event" to create your schedule.</p>
+              <Button 
+                variant="outline" 
+                size="sm" 
+                onClick={() => {
+                  const defaultEvents: EventTimelineItem[] = [
+                    { id: '1', time: '2026-10-10T08:00:00Z', day: 1, title: 'Registration & Check-In', description: 'Get your swag bags, ID badges, and find your designated hacking stations.' },
+                    { id: '2', time: '2026-10-10T09:00:00Z', day: 1, title: 'Opening Ceremony', description: 'Keynote speakers, track announcements, and the official start countdown.' },
+                    { id: '3', time: '2026-10-10T10:00:00Z', day: 1, title: 'Problem Statement Release', description: 'The official problem statements are revealed to all participants.' },
+                    { id: '4', time: '2026-10-10T10:30:00Z', day: 1, title: 'Hackathon Begins 🚀', description: '36 hours on the clock. Start building.' },
+                    { id: '5', time: '2026-10-10T15:00:00Z', day: 1, title: 'Mentorship Session', description: 'Industry experts will circulate to provide feedback on initial architecture.' },
+                    { id: '6', time: '2026-10-10T19:00:00Z', day: 1, title: 'Dinner Break 🍽️', description: 'Fuel up for the night shift.' },
+                    { id: '7', time: '2026-10-10T21:00:00Z', day: 1, title: 'Progress Checkpoint', description: 'Quick check-in on your team\'s progress.' },
+                    { id: '8', time: '2026-10-10T23:00:00Z', day: 1, title: 'Fun & Networking Session 🎉', description: 'Take a break, play some games, and network with other hackers.' },
+                    { id: '9', time: '2026-10-11T08:00:00Z', day: 2, title: 'Breakfast & Refresh', description: 'Morning fuel to push through the final stretch.' },
+                    { id: '10', time: '2026-10-11T11:00:00Z', day: 2, title: 'Final Checkpoint', description: 'Last mentor feedback before submissions.' },
+                    { id: '11', time: '2026-10-11T13:00:00Z', day: 2, title: 'Final Submission 📥', description: 'Keyboards down. Code freeze and project submissions.' },
+                    { id: '12', time: '2026-10-11T14:00:00Z', day: 2, title: 'Project Evaluation ⚖️', description: 'Present your solutions to the judges.' },
+                    { id: '13', time: '2026-10-11T17:30:00Z', day: 2, title: 'Results & Prize Distribution 🏆', description: 'Winners announced and prizes distributed.' },
+                    { id: '14', time: '2026-10-11T20:30:00Z', day: 2, title: 'Closing Ceremony 🎊', description: 'Official closing of the hackathon.' },
+                  ];
+                  setTimeline(defaultEvents);
+                  toastError('Timeline Loaded', 'Click Save Timeline Changes to confirm.');
+                }}
+              >
+                Load Default Timeline Data
+              </Button>
             </div>
           )}
         </div>

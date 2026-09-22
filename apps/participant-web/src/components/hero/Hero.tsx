@@ -8,10 +8,21 @@ import MobileHero from './MobileHero';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
+import { EventConfigService } from '@shared/services/EventConfigService';
+import type { EventConfig } from '@shared/types/models';
+
 gsap.registerPlugin(ScrollTrigger);
 
 export default function Hero() {
   const [isDesktop, setIsDesktop] = useState(false);
+  const [config, setConfig] = useState<EventConfig | null>(null);
+
+  useEffect(() => {
+    const unsub = EventConfigService.subscribeToConfig((data) => {
+      setConfig(data);
+    });
+    return () => unsub();
+  }, []);
   
   // Parallax Setup
   const mouseX = useMotionValue(0);
@@ -168,8 +179,10 @@ export default function Hero() {
              <div className="absolute inset-0 bg-yellow-500/20 rounded-full blur group-hover:opacity-100 opacity-50 transition-opacity" />
              <div className="relative bg-black/60 border border-yellow-500/50 backdrop-blur-xl px-6 py-2 rounded-full flex items-center gap-3 shadow-[0_0_15px_rgba(234,179,8,0.2)]">
                 <span className="w-2 h-2 rounded-full bg-yellow-500 animate-pulse"></span>
-                <span className="font-bebas tracking-wider text-yellow-500 text-lg sm:text-xl pt-0.5">REGISTRATION CLOSES: <span className="text-white">26 SEPT, 12:00 AM</span></span>
-             </div>
+                <span className="font-bebas tracking-wider text-yellow-500 text-lg sm:text-xl pt-0.5">REGISTRATION CLOSES: <span className="text-white">
+                {config?.registrationDeadline ? new Date(config.registrationDeadline).toLocaleString('en-US', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).toUpperCase() : '26 SEPT, 12:00 AM'}
+              </span></span>
+            </div>
           </div>
           </motion.div>
         </div>

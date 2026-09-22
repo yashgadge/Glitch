@@ -25,11 +25,15 @@ const defaultDay2 = [
 
 export default function TimelineSection() {
   const [timeline, setTimeline] = useState<EventTimelineItem[]>([]);
+  const [day1Display, setDay1Display] = useState('(OCT 10)');
+  const [day2Display, setDay2Display] = useState('(OCT 11)');
 
   useEffect(() => {
     const unsub = EventConfigService.subscribeToConfig((config) => {
-      if (config && config.timeline) {
-        setTimeline(config.timeline);
+      if (config) {
+        if (config.timeline) setTimeline(config.timeline);
+        if (config.day1DateDisplay) setDay1Display(config.day1DateDisplay);
+        if (config.day2DateDisplay) setDay2Display(config.day2DateDisplay);
       }
     });
     return () => unsub();
@@ -64,7 +68,7 @@ export default function TimelineSection() {
         {/* Day 1 Column */}
         <div>
           <h3 className="font-bebas text-4xl text-white mb-8 tracking-widest text-center md:text-left drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-            <span className="text-primary drop-shadow-[0_0_15px_rgba(227,6,19,0.8)]">DAY 1</span> (OCT 10)
+            <span className="text-primary drop-shadow-[0_0_15px_rgba(227,6,19,0.8)]">DAY 1</span> {day1Display}
           </h3>
           <div className="relative border-l-2 border-primary/30 ml-4 md:ml-8" style={{ perspective: 1000 }}>
             {day1Schedule.map((item, idx) => (
@@ -96,7 +100,7 @@ export default function TimelineSection() {
         {/* Day 2 Column */}
         <div>
           <h3 className="font-bebas text-4xl text-white mb-8 tracking-widest text-center md:text-left drop-shadow-[0_0_10px_rgba(255,255,255,0.3)]">
-            <span className="text-primary drop-shadow-[0_0_15px_rgba(227,6,19,0.8)]">DAY 2</span> (OCT 11)
+            <span className="text-primary drop-shadow-[0_0_15px_rgba(227,6,19,0.8)]">DAY 2</span> {day2Display}
           </h3>
           <div className="relative border-l-2 border-primary/30 ml-4 md:ml-8" style={{ perspective: 1000 }}>
             {day2Schedule.map((item, idx) => (
