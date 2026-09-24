@@ -49,6 +49,12 @@ export default function ParticipantProfile() {
     e.preventDefault();
     if (!user) return;
     
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone.trim())) {
+      showError('Phone number must be exactly 10 digits.');
+      return;
+    }
+
     setSaving(true);
     try {
       await ParticipantService.updateParticipant(user.uid, {
@@ -174,9 +180,12 @@ export default function ParticipantProfile() {
                       </Label>
                       <Input 
                         required 
+                        type="tel"
+                        pattern="[0-9]{10}"
+                        maxLength={10}
                         value={phone} 
-                        onChange={(e) => setPhone(e.target.value)} 
-                        placeholder="+91 9876543210"
+                        onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))} 
+                        placeholder="9876543210"
                       />
                     </div>
                     <div>

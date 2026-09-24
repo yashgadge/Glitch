@@ -126,6 +126,12 @@ export default function RegistrationWizard() {
       error('Validation Error', 'Please fill in all required fields (Name, Phone, College, and City).');
       return;
     }
+
+    const phoneRegex = /^\d{10}$/;
+    if (!phoneRegex.test(phone.trim())) {
+      error('Validation Error', 'Phone number must be exactly 10 digits.');
+      return;
+    }
     
     setLoading(true);
     try {
@@ -290,7 +296,15 @@ export default function RegistrationWizard() {
                   </div>
                   <div>
                     <Label>PHONE NUMBER <span className="text-red-500">*</span></Label>
-                    <Input required value={phone} onChange={e => setPhone(e.target.value)} placeholder="+91 9876543210" />
+                    <Input 
+                      required 
+                      type="tel"
+                      pattern="[0-9]{10}"
+                      maxLength={10}
+                      value={phone} 
+                      onChange={e => setPhone(e.target.value.replace(/\D/g, ''))} 
+                      placeholder="9876543210" 
+                    />
                   </div>
                   <div>
                     <Label>COLLEGE / UNIVERSITY <span className="text-red-500">*</span></Label>

@@ -21,8 +21,8 @@ export default function QuickEditModal({ open, onClose, participant, adminId }: 
 
   useEffect(() => {
     if (participant) {
-      const { name, mobile, college, track, internalNotes } = participant;
-      setForm({ name, mobile, college, track, internalNotes });
+      const { name, mobile, phone, college, track, internalNotes } = participant;
+      setForm({ name, mobile: mobile || phone || '', college, track, internalNotes });
     }
   }, [participant]);
 
@@ -32,9 +32,19 @@ export default function QuickEditModal({ open, onClose, participant, adminId }: 
 
   const handleSave = async () => {
     if (!participant) return;
+    
+    if (form.mobile) {
+      const phoneRegex = /^\d{10}$/;
+      if (!phoneRegex.test(form.mobile.trim())) {
+        toastError('Validation Error', 'Phone number must be exactly 10 digits.');
+        return;
+      }
+    }
+
     setIsSaving(true);
     try {
-      await ParticipantService.updateParticipant(participant.id, form);
+      const updatedForm = { ...form, phone: form.mobile, mobile: form.mobile };
+      await ParticipantService.updateParticipant(participant.id, updatedForm);
       await AuditService.logAction({
         actorId: adminId,
         actorRole: 'super_admin',
@@ -61,7 +71,13 @@ export default function QuickEditModal({ open, onClose, participant, adminId }: 
         </div>
         <div>
           <Label>Mobile</Label>
-          <Input value={form.mobile || ''} onChange={e => handleChange('mobile', e.target.value)} />
+          <Input 
+            type="tel"
+            pattern="[0-9]{10}"
+            maxLength={10}
+            value={form.mobile || ''} 
+            onChange={e => handleChange('mobile', e.target.value.replace(/\D/g, ''))} 
+          />
         </div>
         <div>
           <Label>College</Label>
