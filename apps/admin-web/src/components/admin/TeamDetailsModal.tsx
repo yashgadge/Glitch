@@ -226,7 +226,7 @@ export function TeamDetailsModal({ isOpen, onClose, team }: TeamDetailsModalProp
               </div>
               <div>
                 <p className="text-xs text-gray-500 uppercase tracking-wider font-semibold mb-1">Payment</p>
-                {team.paymentStatus === 'paid' ? (
+                {team.paymentStatus?.toLowerCase() === 'paid' ? (
                   <Badge variant="success" className="bg-green-500/10 text-green-400">PAID</Badge>
                 ) : (
                   <Badge variant="warning">PENDING</Badge>
