@@ -331,7 +331,7 @@ export default function ParticipantWorkspace() {
                 </div>
                 <div>
                   <span className="text-gray-500 block text-xs">Phone</span>
-                  <span className="text-white">{participant.phone || 'N/A'}</span>
+                  <span className="text-white">{participant.phone || participant.mobile || 'N/A'}</span>
                 </div>
                 <div>
                   <span className="text-gray-500 block text-xs">College</span>

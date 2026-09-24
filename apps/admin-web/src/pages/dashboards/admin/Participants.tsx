@@ -73,7 +73,8 @@ export default function Participants() {
           (p.email && p.email.toLowerCase().includes(lowerSearch)) ||
           (p.glitchId && p.glitchId.toLowerCase().includes(lowerSearch)) ||
           (p.teamId && p.teamId.toLowerCase().includes(lowerSearch)) ||
-          (p.mobile && p.mobile.toLowerCase().includes(lowerSearch))
+          (p.mobile && p.mobile.toLowerCase().includes(lowerSearch)) ||
+          (p.phone && p.phone.toLowerCase().includes(lowerSearch))
         );
       }
       
@@ -217,7 +218,7 @@ export default function Participants() {
       cell: (row) => (
         <div className="flex flex-col">
           <span className="text-sm text-gray-300">{row.email}</span>
-          <span className="text-xs text-gray-500">{row.mobile || 'No Mobile'}</span>
+          <span className="text-xs text-gray-500">{row.mobile || row.phone || 'No Mobile'}</span>
         </div>
       )
     },
