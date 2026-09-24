@@ -22,6 +22,7 @@ interface DataTableProps<T> {
   pageSize?: number;
   emptyMessage?: string;
   keyExtractor?: (row: T) => string;
+  defaultSort?: { key: string, direction: 'asc' | 'desc' };
 }
 
 export function DataTable<T>({ 
@@ -35,10 +36,11 @@ export function DataTable<T>({
   className,
   pageSize = 10,
   emptyMessage = "No records found.",
-  keyExtractor
+  keyExtractor,
+  defaultSort
 }: DataTableProps<T>) {
   const [searchTerm, setSearchTerm] = useState('');
-  const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(null);
+  const [sortConfig, setSortConfig] = useState<{ key: string, direction: 'asc' | 'desc' } | null>(defaultSort || null);
   const [currentPage, setCurrentPage] = useState(1);
   const [internalPageSize, setInternalPageSize] = useState(pageSize);
   const [selectedKeys, setSelectedKeys] = useState<Set<string>>(new Set());

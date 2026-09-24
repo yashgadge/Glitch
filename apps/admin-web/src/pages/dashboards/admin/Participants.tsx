@@ -368,6 +368,7 @@ export default function Participants() {
           onSelectionChange={(rows) => setSelectedRows(rows)}
           onRowClick={(row) => navigate(`/workspace/participants/${row.id}`)}
           pageSize={15}
+          defaultSort={{ key: 'createdAt', direction: 'desc' }}
           className="border-none"
         />
       </Card>
