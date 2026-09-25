@@ -53,41 +53,20 @@ class DevToolBoundary extends React.Component<{children: React.ReactNode}, {hasE
 }
 
 const AppContent = () => {
-  React.useEffect(() => {
-    sessionStorage.removeItem('chunk-load-error-refreshed');
-  }, []);
-
   return (
-    <Routes>
-      {/* Public Routes guarded by Maintenance Mode */}
-      <Route element={<MaintenanceGuard />}>
-        {/* Landing Page Route - Keeps its own smooth scroll structure */}
-        <Route path="/" element={<LandingPage />} />
-        
-        {/* New Public Layout Routes */}
-        <Route element={<PublicLayout />}>
-          <Route path="/event" element={<EventDetails />} />
-          <Route path="/registration-fees" element={<RegistrationFeesPage />} />
-          <Route path="/competition-rules" element={<CompetitionRules />} />
-          <Route path="/terms" element={<TermsAndConditions />} />
-          <Route path="/privacy" element={<PrivacyPolicy />} />
-          <Route path="/refund-policy" element={<RefundPolicy />} />
-          <Route path="/contact" element={<ContactPage />} />
-          <Route path="/verify/:id" element={<CertificateVerification />} />
-        </Route>
-
-        <Route path="/login" element={<Login />} />
-        <Route path="/forgot-password" element={<ForgotPassword />} />
-        
-        {/* Registration Route */}
-        <Route path="/register" element={<RegistrationWizard />} />
-        
-        {/* Participant Routes */}
-        <Route path="/force-password-change" element={<ProtectedRoute><ForcePasswordChange /></ProtectedRoute>} />
-        <Route path="/dashboard/*" element={<RoleRoute allowedRoles={['participant']}><ProfileGuard><LazyParticipant /></ProfileGuard></RoleRoute>} />
-        <Route path="/workspace/*" element={<Navigate to="/dashboard" replace />} />
-      </Route>
-    </Routes>
+    <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 overflow-hidden">
+      <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-red-900/20 via-[#0a0a0a] to-[#0a0a0a] opacity-60 pointer-events-none"></div>
+      <div className="text-center space-y-4 z-10">
+        <h1 className="text-5xl md:text-7xl font-bebas tracking-widest text-white">
+          EVENT <span className="text-red-500">POSTPONED</span>
+        </h1>
+        <p className="text-lg md:text-xl font-inter text-gray-400 max-w-2xl mx-auto">
+          Due to upcoming university exams, GLITCH 36 has been temporarily postponed. 
+          <br/>
+          Stay tuned for further updates and new dates.
+        </p>
+      </div>
+    </div>
   );
 };
 

@@ -1,4 +1,18 @@
-# React + TypeScript + Vite
+# 🚨 AI ASSISTANT INSTRUCTIONS - READ FIRST 🚨
+
+If you are an AI assistant and have been asked to "resume the event", "restart the website", or "undo the postponed state", follow these exact instructions:
+
+**How to Restore the Participant Website:**
+1. The participant website was put into a "postponed" state by replacing the main routing logic in `apps/participant-web/src/App.tsx`.
+2. To restore the website, open `apps/participant-web/src/App.tsx`.
+3. Locate the `AppContent` component. It currently returns a hardcoded `div` saying "EVENT POSTPONED".
+4. Replace that `AppContent` block with the original routing logic (which uses `<Routes>`, `<MaintenanceGuard>`, `<PublicLayout>`, etc.).
+5. If you cannot find the original code in the file's history, check the Git commit history for the commit made on roughly Sept 25/26, 2026, which contains the change.
+6. Once `AppContent` is restored to return the `<Routes>` block, build and deploy the `participant-web` project.
+
+---
+
+# GLITCH 36 Monorepo
 
 This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
 
