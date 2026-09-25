@@ -28,24 +28,20 @@ function App() {
   return (
     <>
       <Suspense fallback={<LoadingFallback />}>
-        <Routes>
-          {/* Public Routes guarded by Maintenance Mode */}
-          <Route element={<MaintenanceGuard />}>
-            <Route path="/" element={<Navigate to="/login" replace />} />
-            <Route path="/login" element={<Login />} />
-            <Route path="/forgot-password" element={<ForgotPassword />} />
-            <Route path="/force-password-change" element={<ProtectedRoute><ForcePasswordChange /></ProtectedRoute>} />
-          </Route>
-          
-          {/* Internal Access Gateway - All Staff Roles resolve through here */}
-          <Route path="/workspace/*" element={
-            <ProtectedRoute>
-              <ProfileGuard>
-                <WorkspaceResolver />
-              </ProfileGuard>
-            </ProtectedRoute>
-          } />
-        </Routes>
+        <div className="min-h-screen bg-[#0a0a0a] flex items-center justify-center p-4 overflow-hidden">
+          <div className="fixed inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-blue-900/20 via-[#0a0a0a] to-[#0a0a0a] opacity-60 pointer-events-none"></div>
+          <div className="text-center space-y-4 z-10">
+            <h1 className="text-5xl md:text-7xl font-bebas tracking-widest text-white">
+              ADMIN <span className="text-blue-500">STOPPED</span>
+            </h1>
+            <p className="text-lg md:text-xl font-inter text-gray-400 max-w-2xl mx-auto">
+              The admin panel is currently stopped.
+              <br/><br/>
+              <span className="text-white font-semibold">How to restart:</span><br/>
+              Tell your AI Assistant: "resume the event" to automatically restore both the Participant and Admin websites.
+            </p>
+          </div>
+        </div>
       </Suspense>
       
       {/* Dev Tools - Stripped in Production */}

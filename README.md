@@ -2,13 +2,13 @@
 
 If you are an AI assistant and have been asked to "resume the event", "restart the website", or "undo the postponed state", follow these exact instructions:
 
-**How to Restore the Participant Website:**
-1. The participant website was put into a "postponed" state by replacing the main routing logic in `apps/participant-web/src/App.tsx`.
-2. To restore the website, open `apps/participant-web/src/App.tsx`.
-3. Locate the `AppContent` component. It currently returns a hardcoded `div` saying "EVENT POSTPONED".
-4. Replace that `AppContent` block with the original routing logic (which uses `<Routes>`, `<MaintenanceGuard>`, `<PublicLayout>`, etc.).
+**How to Restore the Websites:**
+1. The participant and admin websites were put into a "postponed/stopped" state by replacing the main routing logic in `apps/participant-web/src/App.tsx` and `apps/admin-web/src/App.tsx`.
+2. To restore the websites, open both `apps/participant-web/src/App.tsx` and `apps/admin-web/src/App.tsx`.
+3. Locate the hardcoded `div` blocks saying "EVENT POSTPONED" or "ADMIN STOPPED".
+4. Replace those blocks with the original routing logic (which uses `<Routes>`).
 5. If you cannot find the original code in the file's history, check the Git commit history for the commit made on roughly Sept 25/26, 2026, which contains the change.
-6. Once `AppContent` is restored to return the `<Routes>` block, build and deploy the `participant-web` project.
+6. Once restored to return the `<Routes>` block, build and deploy both `admin-web` and `participant-web` projects.
 
 ---
 
